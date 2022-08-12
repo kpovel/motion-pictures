@@ -1,0 +1,70 @@
+.list {
+    //noinspection CssInvalidPropertyValue
+    width: -webkit-fill-available;
+    background-color: #646cff;
+}
+
+.movie-list {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.movie {
+    display: flex;
+    justify-content: space-between;
+    width: 510px;
+
+    margin: 20px;
+    border: 2px solid grey;
+    box-shadow: 5px 5px 9px 1px #5f6283;
+    background-color: #835cd3;
+}
+
+.description-movie {
+    display: flex;
+    width: 100%;
+    padding: 5px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bookmark {
+    background: url("../img/bookmark-white.svg") no-repeat;
+    width: 30px;
+    height: 30px;
+    zoom: 80%;
+    border: none;
+    cursor: pointer;
+
+    &__unsaved {
+        background: url("../img/bookmark-white.svg") no-repeat;
+    }
+
+    &__saved {
+        background: url("../img/bookmark-black.svg") no-repeat;
+    }
+}
+
+.save-button {
+    display: flex;
+    column-gap: 5px;
+}
+
+.first-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.film-name {
+    margin: 5px 0;
+}
+
+.details-button {
+    padding: 0.3em 1em;
+    //noinspection CssInvalidPropertyValue
+    width: -webkit-fill-available;
+    color: black;
+    background-color: #9499fb;
+}
