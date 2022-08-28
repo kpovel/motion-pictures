@@ -1,4 +1,8 @@
+/* eslint-disable indent */
 import "./movieFilter.css";
+import {checkboxGenre} from "../../data/data";
+import {TemplateCheckboxGenre} from "./templateCheckboxGenre";
+import {Pagination} from "./pagination";
 
 export function MovieFilter() {
     return (
@@ -43,50 +47,14 @@ export function MovieFilter() {
                     </div>
                 </div>
                 <div className="genres">
-                    <div className="genre">
-                        <input type="checkbox"/>
-                        Action
-                    </div>
-                    <div className="genre">
-                        <input type="checkbox"/>
-                        Comedies
-                    </div>
-                    <div className="genre">
-                        <input type="checkbox"/>
-                        Crime
-                    </div>
-                    <div className="genre">
-                        <input type="checkbox"/>
-                        Documentaries
-                    </div>
-                    <div className="genre">
-                        <input type="checkbox"/>
-                        Dramas
-                    </div>
-                    <div className="genre">
-                        <input type="checkbox"/>
-                        Fantasy
-                    </div>
-                    <div className="genre">
-                        <input type="checkbox"/>
-                        Horror
-                    </div>
-                    <div className="genre">
-                        <input type="checkbox"/>
-                        Romance
-                    </div>
-                    <div className="genre">
-                        <input type="checkbox"/>
-                        Thriller
-                    </div>
+                    {checkboxGenre.map(item => {
+                        return <TemplateCheckboxGenre key={item.id}
+                                                      genre={item.name}
+                                                      id={item.id}
+                        />;
+                    })}
                 </div>
-                <div className="pagination">
-                    <div className="pagination__buttons">
-                        <button className="pagination-button pagination-button__grey">Previous</button>
-                        <button className="pagination-button">Next</button>
-                    </div>
-                    <div className="number-pages">1 of 228</div>
-                </div>
+                <Pagination/>
             </div>
         </div>
     );

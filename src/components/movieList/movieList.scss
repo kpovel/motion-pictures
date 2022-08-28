@@ -13,12 +13,17 @@
 .movie {
     display: flex;
     justify-content: space-between;
-    width: 510px;
+    width: 35vw;
+    min-width: 400px;
 
     margin: 20px;
     border: 2px solid grey;
     box-shadow: 5px 5px 9px 1px #5f6283;
     background-color: #835cd3;
+}
+
+img.movie_preview {
+    height: 20rem;
 }
 
 .description-movie {
@@ -61,7 +66,7 @@
     margin: 5px 0;
 }
 
-.details-button {
+button.details-button {
     padding: 0.3em 1em;
     //noinspection CssInvalidPropertyValue
     width: -webkit-fill-available;
