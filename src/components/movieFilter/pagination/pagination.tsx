@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
-import {nextPage, previousPage} from "../../store/action/action";
-import {movieList} from "../../data/data";
+import {nextPage, previousPage} from "../../../store/action/action";
+import {movieList} from "../../../data/movieData";
 
 export function Pagination() {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

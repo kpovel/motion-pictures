@@ -1,11 +1,10 @@
 /* eslint-disable indent */
 import "./movieList.css";
-import {movieList} from "../../data/data";
+import {movieList} from "../../data/movieData";
 import {MovieTemplate} from "./movieTemplate";
 import {useSelector} from "react-redux";
 
 export function MovieList() {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const currentPage = useSelector((state: number) => state.setPage);
 
@@ -33,7 +32,6 @@ export function MovieList() {
                                               vote_count={item.vote_count}
                         />;
                     }
-
                 })}
             </div>
         </div>
