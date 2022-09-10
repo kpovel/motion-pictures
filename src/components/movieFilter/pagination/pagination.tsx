@@ -1,13 +1,10 @@
 import {useDispatch, useSelector} from "react-redux";
 import {nextPage, previousPage} from "../../../store/action/action";
-import {movieList} from "../../../data/movieData";
 
 export function Pagination() {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const currentPage = useSelector((state: number) => state.setPage);
     const dispatch = useDispatch();
-    const numberPages = Math.ceil(movieList.length / 10);
+    const currentPage = useSelector(({setPage} : {setPage: number}) => setPage);
+    const numberPages = useSelector(({setNumberPage} : {setNumberPage: number}) => setNumberPage);
 
     function setPreviousPage() {
         dispatch(previousPage(currentPage));

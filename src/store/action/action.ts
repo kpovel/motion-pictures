@@ -1,6 +1,6 @@
-import {FILTER_SORT, FILTER_YEAR, NEXT_PAGE, PREVIOUS_PAGE} from "./actionTypes";
+import {FILTER_SORT, FILTER_YEAR, NEXT_PAGE, NUMBER_PAGES, PREVIOUS_PAGE, RESET_PAGE} from "./actionTypes";
 
-export {nextPage, previousPage, selectFilterSort, selectFilterYear};
+export {nextPage, previousPage, resetPageNumber, numberPages, selectFilterSort, selectFilterYear};
 
 function nextPage(pageNumber: number) {
     return {
@@ -16,6 +16,20 @@ function previousPage(pageNumber: number) {
     };
 }
 
+function resetPageNumber(pageNumber: number) {
+    return {
+        type: RESET_PAGE,
+        pageNumber
+    };
+}
+
+function numberPages(pageNumber: number) {
+    return {
+        type: NUMBER_PAGES,
+        pageNumber
+    };
+}
+
 function selectFilterSort(sortBy: string) {
     return {
         type: FILTER_SORT,
@@ -23,7 +37,7 @@ function selectFilterSort(sortBy: string) {
     };
 }
 
-function selectFilterYear(yearRelease: number) {
+function selectFilterYear(yearRelease: string) {
     return {
         type: FILTER_YEAR,
         yearRelease

@@ -1,16 +1,15 @@
 import {useDispatch, useSelector} from "react-redux";
-import {selectFilterSort, selectFilterYear} from "../../../store/action/action";
+import {resetPageNumber, selectFilterSort, selectFilterYear} from "../../../store/action/action";
 import {MovieFilter} from "../../../types";
 import {UndefinedFilterError} from "../../../customHandlerErrors/handleErrors";
 
 export function SelectMovieFilter({option, labelName, reduxStateSetting}: MovieFilter) {
-
-    const usageState = reduxStateSetting === "setSortBy" ? "setSortBy" : "setFilterYear";
-    // @ts-ignore
-    const selectedFilter = useSelector((state: string) => state[usageState]);
     const dispatch = useDispatch();
+    const usageState = reduxStateSetting === "setSortBy" ? "setSortBy" : "setFilterYear";
+    const selectedFilter = useSelector((state: any) => state[usageState]);
 
     function selectFilter(event: any) {
+        dispatch(resetPageNumber(1));
         switch (reduxStateSetting) {
             case "setSortBy":
                 dispatch(selectFilterSort(event.target.value));

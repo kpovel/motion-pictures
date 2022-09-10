@@ -2,19 +2,49 @@
 import "./movieList.css";
 import {movieList} from "../../data/movieData";
 import {MovieTemplate} from "./movieTemplate";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import parseISO from "date-fns/parseISO";
+import {numberPages} from "../../store/action/action";
+import {useEffect} from "react";
 
 export function MovieList() {
-    // @ts-ignore
-    const currentPage = useSelector((state: number) => state.setPage);
+    const dispatch = useDispatch();
+
+    const currentPage = useSelector(({setPage}: { setPage: number }) => setPage);
+    const selectedFilterSortBy = useSelector(({setSortBy}: { setSortBy: string }) => setSortBy);
+    const selectedFilterYear = useSelector(({setFilterYear}: { setFilterYear: string }) => setFilterYear);
+
+    const filteredMovieList = movieList.filter(item => {
+        if (selectedFilterYear === "noSelected") return true;
+        return parseISO(item.release_date).getFullYear().toString() === selectedFilterYear;
+    });
+
+    useEffect(() => {
+        dispatch(numberPages(Math.ceil(filteredMovieList.length / 10)));
+    });
+
+    const sortedMovieList = filteredMovieList.sort((a, b): any => {
+        switch (selectedFilterSortBy) {
+            case "decreasingPopularity":
+                return a.popularity + b.popularity;
+            case "increasingPopularity":
+                return a.popularity - b.popularity;
+            case "decreasingRating":
+                return a.vote_average + b.vote_average;
+            case "increasingRating":
+                return a.vote_average - b.vote_average;
+            default:
+                return true;
+        }
+    });
 
     return (
         <div className="list">
             <div className="movie-list">
-                {movieList.map((item, index) => {
+                {sortedMovieList.map((item, index) => {
                     const selectionFilms = (index >= currentPage * 10 - 10) && (index < currentPage * 10);
 
-                    if (selectionFilms){
+                    if (selectionFilms) {
                         return <MovieTemplate key={item.id}
                                               adult={item.adult}
                                               backdrop_path={item.backdrop_path}

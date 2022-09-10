@@ -1,12 +1,11 @@
 import {combineReducers} from "redux";
-import {FILTER_SORT, FILTER_YEAR, NEXT_PAGE, PREVIOUS_PAGE} from "./action/actionTypes";
-import {movieList} from "../data/movieData";
+import {FILTER_SORT, FILTER_YEAR, NEXT_PAGE, NUMBER_PAGES, PREVIOUS_PAGE, RESET_PAGE} from "./action/actionTypes";
 
 const savedPageNumber = Number(localStorage.getItem("currentPageNumber")) || 1;
 
 function setPage(state = savedPageNumber, action: { type: string, pageNumber: number }) {
     let newPageNumber = 1;
-    const numberPages = Math.ceil(movieList.length / 10);
+    const numberPages = Number(localStorage.getItem("numberPages")) || 1;
 
     switch (action.type) {
         case NEXT_PAGE:
@@ -22,12 +21,32 @@ function setPage(state = savedPageNumber, action: { type: string, pageNumber: nu
                 localStorage.setItem("currentPageNumber", JSON.stringify(newPageNumber));
             }
             return newPageNumber;
+        case RESET_PAGE:
+            newPageNumber = action.pageNumber;
+            localStorage.setItem("currentPageNumber", JSON.stringify(newPageNumber));
+            return newPageNumber;
         default:
             return state;
     }
 }
 
+
+const savedNumberPages = Number(localStorage.getItem("numberPages")) || 1;
+
+function setNumberPage(state = savedNumberPages, action: { type: string, pageNumber: number }) {
+    const newPageNumber = action.pageNumber;
+    switch (action.type) {
+        case NUMBER_PAGES:
+            localStorage.setItem("numberPages", JSON.stringify(newPageNumber));
+            return newPageNumber;
+        default:
+            return state;
+    }
+}
+
+
 const savedYearSort = localStorage.getItem("yearReleaseSort") || "2020";
+
 function setFilterYear(state = savedYearSort, action: { type: string, yearRelease: number }) {
     const yearRelease = action.yearRelease;
 
@@ -40,7 +59,9 @@ function setFilterYear(state = savedYearSort, action: { type: string, yearReleas
     }
 }
 
+
 const savedSortBy = localStorage.getItem("sortByFilter");
+
 function setSortBy(state = savedSortBy, action: { type: string, sortBy: string }) {
     const sortBy = action.sortBy;
 
@@ -57,6 +78,7 @@ function setSortBy(state = savedSortBy, action: { type: string, sortBy: string }
 const movie = combineReducers({
     setPage,
     setSortBy,
+    setNumberPage,
     setFilterYear
 });
 
