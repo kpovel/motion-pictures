@@ -1,12 +1,11 @@
 /* eslint-disable indent */
 import "./movieFilter.css";
-import {checkboxGenre} from "../../data/movieData";
-import {TemplateCheckboxGenre} from "./filters/templateCheckboxGenre";
 import {Pagination} from "./pagination/pagination";
 import {SelectMovieFilter} from "./filters/selectMovieFilter";
 import {optionsYearRelease} from "../../data/optionsYearRelease";
 import {optionsSortBy} from "../../data/optionsSortBy";
 import {ResetMovieFilters} from "./filters/resetMovieFilters";
+import {CheckboxGenre} from "./filters/checkboxGenre";
 
 export function MovieFilter() {
     return (
@@ -22,14 +21,7 @@ export function MovieFilter() {
                                    labelName="Year of release"
                                    reduxStateSetting="setFilterYear"
                 />
-                <div className="genres">
-                    {checkboxGenre.map(item => {
-                        return <TemplateCheckboxGenre key={item.id}
-                                                      genre={item.name}
-                                                      id={item.id}
-                        />;
-                    })}
-                </div>
+                <CheckboxGenre/>
                 <Pagination/>
             </div>
         </div>

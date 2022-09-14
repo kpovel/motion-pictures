@@ -1,5 +1,14 @@
 import {combineReducers} from "redux";
-import {FILTER_SORT, FILTER_YEAR, NEXT_PAGE, NUMBER_PAGES, PREVIOUS_PAGE, RESET_PAGE} from "./action/actionTypes";
+import {
+    CHECKBOX_FILTER_GENRE,
+    FILTER_SORT,
+    FILTER_YEAR,
+    NEXT_PAGE,
+    NUMBER_PAGES,
+    PREVIOUS_PAGE,
+    RESET_CHECKBOX_FILTERS,
+    RESET_PAGE
+} from "./action/actionTypes";
 
 const savedPageNumber = Number(localStorage.getItem("currentPageNumber")) || 1;
 
@@ -74,12 +83,37 @@ function setSortBy(state = savedSortBy, action: { type: string, sortBy: string }
     }
 }
 
+const savedCheckedGenre = JSON.parse(localStorage.getItem("checkedGenre") || "[]");
+
+function setCheckboxState(state = savedCheckedGenre, action: { type: string, genre: number }) {
+    const newCheckedList = new Set(state);
+    const isSelectThisFilter = newCheckedList.has(action.genre);
+
+    switch (action.type) {
+        case CHECKBOX_FILTER_GENRE:
+            if (isSelectThisFilter) {
+                newCheckedList.delete(action.genre);
+            } else {
+                newCheckedList.add(action.genre);
+            }
+
+            localStorage.setItem("checkedGenre", JSON.stringify([...newCheckedList]));
+            return newCheckedList;
+        case RESET_CHECKBOX_FILTERS:
+            newCheckedList.clear();
+            localStorage.setItem("checkedGenre", JSON.stringify([...newCheckedList]));
+            return newCheckedList;
+        default:
+            return state;
+    }
+}
 
 const movie = combineReducers({
     setPage,
     setSortBy,
     setNumberPage,
-    setFilterYear
+    setFilterYear,
+    setCheckboxState
 });
 
 export default movie;

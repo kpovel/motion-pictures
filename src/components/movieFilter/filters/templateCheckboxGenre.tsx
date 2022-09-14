@@ -1,4 +1,5 @@
-import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {selectFilterGenre} from "../../../store/action/action";
 
 type Genre = {
     genre: string,
@@ -7,19 +8,18 @@ type Genre = {
 
 
 export function TemplateCheckboxGenre({genre, id}: Genre) {
-    const [checkboxState, setCheckboxState] = useState(false);
+    const checkboxState = useSelector(({setCheckboxState}: {setCheckboxState: number[]}) => setCheckboxState);
+    const isCheckboxChecked = new Set(checkboxState).has(id);
+    const dispatch = useDispatch();
 
-    function handleClick(event: any) {
-        const target = event.target;
-        const value = target.type === "checkbox" ? target.checked : target.value;
-
-        setCheckboxState(value);
+    function handleClick() {
+        dispatch(selectFilterGenre(id));
     }
 
     return (
         <form>
             <div className="genre">
-                <input type="checkbox" checked={checkboxState} onChange={handleClick}/>
+                <input type="checkbox" checked={isCheckboxChecked} onChange={handleClick}/>
                 {genre}
             </div>
         </form>

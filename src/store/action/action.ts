@@ -1,6 +1,24 @@
-import {FILTER_SORT, FILTER_YEAR, NEXT_PAGE, NUMBER_PAGES, PREVIOUS_PAGE, RESET_PAGE} from "./actionTypes";
+import {
+    CHECKBOX_FILTER_GENRE,
+    FILTER_SORT,
+    FILTER_YEAR,
+    NEXT_PAGE,
+    NUMBER_PAGES,
+    PREVIOUS_PAGE,
+    RESET_CHECKBOX_FILTERS,
+    RESET_PAGE
+} from "./actionTypes";
 
-export {nextPage, previousPage, resetPageNumber, numberPages, selectFilterSort, selectFilterYear};
+export {
+    nextPage,
+    previousPage,
+    resetPageNumber,
+    numberPages,
+    selectFilterSort,
+    selectFilterYear,
+    selectFilterGenre,
+    resetCheckboxFilters
+};
 
 function nextPage(pageNumber: number) {
     return {
@@ -41,5 +59,18 @@ function selectFilterYear(yearRelease: string) {
     return {
         type: FILTER_YEAR,
         yearRelease
+    };
+}
+
+function selectFilterGenre(genre: number) {
+    return {
+        type: CHECKBOX_FILTER_GENRE,
+        genre
+    };
+}
+
+function resetCheckboxFilters() {
+    return {
+        type: RESET_CHECKBOX_FILTERS
     };
 }
