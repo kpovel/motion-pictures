@@ -13,10 +13,20 @@ export function MovieList() {
     const currentPage = useSelector(({setPage}: { setPage: number }) => setPage);
     const selectedFilterSortBy = useSelector(({setSortBy}: { setSortBy: string }) => setSortBy);
     const selectedFilterYear = useSelector(({setFilterYear}: { setFilterYear: string }) => setFilterYear);
+    const selectedGenres = useSelector(({setCheckboxState}: { setCheckboxState: number[] }) => setCheckboxState);
 
-    const filteredMovieList = movieList.filter(item => {
+    const filteredMovieListBySelectors = movieList.filter(item => {
         if (selectedFilterYear === "noSelected") return true;
         return parseISO(item.release_date).getFullYear().toString() === selectedFilterYear;
+    });
+
+    const filteredMovieList = filteredMovieListBySelectors.filter(item => {
+        const isGenreFilters = selectedGenres.length;
+        if (!isGenreFilters) return true;
+
+        for (const selectedGenre of selectedGenres) {
+            if (item.genre_ids.includes(selectedGenre)) return item;
+        }
     });
 
     useEffect(() => {

@@ -8,7 +8,7 @@ type Genre = {
 
 
 export function TemplateCheckboxGenre({genre, id}: Genre) {
-    const checkboxState = useSelector(({setCheckboxState}: {setCheckboxState: number[]}) => setCheckboxState);
+    const checkboxState = useSelector(({setCheckboxState}: { setCheckboxState: number[] }) => setCheckboxState);
     const isCheckboxChecked = new Set(checkboxState).has(id);
     const dispatch = useDispatch();
 
@@ -17,11 +17,11 @@ export function TemplateCheckboxGenre({genre, id}: Genre) {
     }
 
     return (
-        <form>
-            <div className="genre">
+        <div className="genre">
+            <label>
                 <input type="checkbox" checked={isCheckboxChecked} onChange={handleClick}/>
                 {genre}
-            </div>
-        </form>
+            </label>
+        </div>
     );
 }

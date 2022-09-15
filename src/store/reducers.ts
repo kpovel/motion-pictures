@@ -98,11 +98,11 @@ function setCheckboxState(state = savedCheckedGenre, action: { type: string, gen
             }
 
             localStorage.setItem("checkedGenre", JSON.stringify([...newCheckedList]));
-            return newCheckedList;
+            return [...newCheckedList];
         case RESET_CHECKBOX_FILTERS:
             newCheckedList.clear();
             localStorage.setItem("checkedGenre", JSON.stringify([...newCheckedList]));
-            return newCheckedList;
+            return [...newCheckedList];
         default:
             return state;
     }

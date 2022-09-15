@@ -4068,7 +4068,7 @@ export const checkboxGenre: CheckboxGenre[] = [
     },
     {
         id: 80,
-        name: "Crime (russians)",
+        name: "Crime",
     },
     {
         id: 99,
