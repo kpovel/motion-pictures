@@ -1,14 +1,23 @@
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
+    font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    height: 100vh;
+    width: 100vw;
+}
 
+* {
+    box-sizing: border-box;
 }
 
 body {
-  min-width: 320px;
-  min-height: 100vh;
-  padding: 0;
-  margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+input:focus, textarea:focus, select:focus{
+    outline: none;
 }

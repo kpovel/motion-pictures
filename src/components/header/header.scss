@@ -4,10 +4,9 @@
     align-items: center;
     position: sticky;
     top: 0;
-
-    padding: 0 20px;
+    width: 100vw;
+    height: 68px;
     background-color: #40a2c5;
-    height: 70px;
 }
 
 button {
@@ -27,10 +26,11 @@ button {
 
     &.login {
         background-color: #4bd241;
+        margin: 20px;
     }
 }
 
-button:hover {
+.login:hover {
     border-color: #646CFFFF;
 
     &.tab_name {

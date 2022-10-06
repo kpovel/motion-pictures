@@ -1,9 +1,9 @@
-export type optionsSortBy = Readonly<{
+export type optionSortBy = Readonly<{
     label: string,
     value: string,
 }>;
 
-export const optionsSortBy: optionsSortBy[] = [
+export const optionsSortBy: optionSortBy[] = [
     {
         label: "Decreasing popularity",
         value: "decreasingPopularity"
@@ -19,5 +19,17 @@ export const optionsSortBy: optionsSortBy[] = [
     {
         label: "Increasing rating",
         value: "increasingRating"
+    }
+];
+
+export const optionSortByForAuthorizedUser: optionSortBy[] = [
+    ...optionsSortBy,
+    {
+        label: "See later",
+        value: "seeLater"
+    },
+    {
+        label: "Chosen",
+        value: "chosen"
     }
 ];
