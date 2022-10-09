@@ -4,6 +4,8 @@ import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {useCookies} from "react-cookie";
 import {add} from "date-fns";
+import eye from "../img/eye.svg";
+import eyeSlash from "../img/eye-slash.svg";
 
 export function AuthorizationMenu() {
     const [visibilityPassword, setVisibilityPassword] = useState(false);
@@ -63,7 +65,8 @@ export function AuthorizationMenu() {
                         <input className="form-textbox form-textbox__active" name="password"
                                type={visibilityPassword ? "text" : "password"}
                                placeholder="Password"/>
-                        <i className="show-password" onClick={showPassword}/>
+                        <img src={visibilityPassword ? eye : eyeSlash} className="show-password"
+                             onClick={showPassword}/>
                     </p>
                     <input type="submit" className="login-button" value="Log in"/>
                 </form>

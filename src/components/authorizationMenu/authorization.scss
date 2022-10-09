@@ -93,16 +93,6 @@
     position: relative;
     right: 5px;
     top: 6px;
-
-    &:before {
-        content: url("../img/eye-slash.svg");
-    }
-
-    &__active {
-        &:before {
-            content: url("../img/eye.svg");
-        }
-    }
 }
 
 p {
