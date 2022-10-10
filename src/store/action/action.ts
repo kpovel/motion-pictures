@@ -1,4 +1,5 @@
 import {
+    ADD_MOVIE_TO_WATCH_LATER, ADD_MOVIE_TO_SELECTED,
     CHECKBOX_FILTER_GENRE,
     FILTER_SORT,
     FILTER_YEAR,
@@ -17,7 +18,9 @@ export {
     selectFilterSort,
     selectFilterYear,
     selectFilterGenre,
-    resetCheckboxFilters
+    resetCheckboxFilters,
+    movieToSelected,
+    movieToWatchLater
 };
 
 function nextPage(pageNumber: number) {
@@ -72,5 +75,19 @@ function selectFilterGenre(genre: number) {
 function resetCheckboxFilters() {
     return {
         type: RESET_CHECKBOX_FILTERS
+    };
+}
+
+function movieToSelected(movieID: number) {
+    return {
+        type: ADD_MOVIE_TO_SELECTED,
+        movieID
+    };
+}
+
+function movieToWatchLater(movieID: number) {
+    return {
+        type: ADD_MOVIE_TO_WATCH_LATER,
+        movieID
     };
 }

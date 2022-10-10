@@ -1,5 +1,7 @@
 import {combineReducers} from "redux";
 import {
+    ADD_MOVIE_TO_SELECTED,
+    ADD_MOVIE_TO_WATCH_LATER,
     CHECKBOX_FILTER_GENRE,
     FILTER_SORT,
     FILTER_YEAR,
@@ -108,12 +110,57 @@ function setCheckboxState(state = savedCheckedGenre, action: { type: string, gen
     }
 }
 
+const savedListSelectedMovies = JSON.parse(localStorage.getItem("listOfSelectedMovie") || "[]");
+
+function addMovieToSelected(state = savedListSelectedMovies, action: { type: string, movieID: number }) {
+    const newSavedList = new Set(state);
+    const isSelectedThisMovie = newSavedList.has(action.movieID);
+
+    switch (action.type) {
+        case ADD_MOVIE_TO_SELECTED:
+            if (isSelectedThisMovie) {
+                newSavedList.delete(action.movieID);
+            } else {
+                newSavedList.add(action.movieID);
+            }
+
+            localStorage.setItem("listOfSelectedMovie", JSON.stringify([...newSavedList]));
+            return [...newSavedList];
+        default:
+            return state;
+    }
+}
+
+const savedListMoviesWatchLater = JSON.parse(localStorage.getItem("watchLaterMovieList") || "[]");
+
+function addMovieToWatchLater(state = savedListMoviesWatchLater, action: { type: string, movieID: number }) {
+    const newWatchLaterList = new Set(state);
+    const isHasThisMovieInList = newWatchLaterList.has(action.movieID);
+
+    switch (action.type) {
+        case ADD_MOVIE_TO_WATCH_LATER:
+            if (isHasThisMovieInList) {
+                newWatchLaterList.delete(action.movieID);
+            } else {
+                newWatchLaterList.add(action.movieID);
+            }
+
+            localStorage.setItem("watchLaterMovieList", JSON.stringify([...newWatchLaterList]));
+            return [...newWatchLaterList];
+        default:
+            return state;
+    }
+
+}
+
 const movie = combineReducers({
     setPage,
     setSortBy,
     setNumberPage,
     setFilterYear,
-    setCheckboxState
+    setCheckboxState,
+    addMovieToSelected,
+    addMovieToWatchLater
 });
 
 export default movie;
