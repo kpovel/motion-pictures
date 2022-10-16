@@ -1,3 +1,11 @@
+.App {
+    height: 100%;
+    &__disabled {
+        height: 100vh;
+        overflow: hidden;
+    }
+}
+
 .main-display {
     display: flex;
     justify-content: space-evenly;

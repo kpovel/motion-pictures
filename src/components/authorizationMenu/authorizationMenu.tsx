@@ -12,15 +12,8 @@ export function AuthorizationMenu() {
     const [cookie, setCookie] = useCookies(["isAuthorized"]);
     const navigate = useNavigate();
 
-    function showPassword(event: any) {
-        const invisiblePassword = "show-password";
-        if (event.target.className === invisiblePassword) {
-            event.target.className += " show-password__active";
-            setVisibilityPassword(true);
-        } else {
-            event.target.className = invisiblePassword;
-            setVisibilityPassword(false);
-        }
+    function showPassword() {
+        setVisibilityPassword(!visibilityPassword);
     }
 
     function authorisationUser(event: any) {
