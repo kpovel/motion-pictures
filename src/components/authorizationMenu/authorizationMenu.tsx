@@ -6,6 +6,7 @@ import {useCookies} from "react-cookie";
 import {add} from "date-fns";
 import eye from "../img/eye.svg";
 import eyeSlash from "../img/eye-slash.svg";
+import {useClickOutside} from "../../customHooks/useClickOutside";
 
 export function AuthorizationMenu() {
     const [visibilityPassword, setVisibilityPassword] = useState(false);
@@ -33,9 +34,13 @@ export function AuthorizationMenu() {
         event.preventDefault();
     }
 
+    const domNode = useClickOutside(() => {
+        navigate("/");
+    });
+
     return (
         <div className="authorizationMenu">
-            <div className="authorization">
+            <div ref={domNode} className="authorization">
                 <div className="authorization-title authorization-title__right">
                     <div></div>
                     <h2 className="singin-title">Sing in</h2>
