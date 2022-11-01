@@ -1,5 +1,5 @@
 import "./header.css";
-import {Link, Outlet} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useCookies} from "react-cookie";
 
 export function Header() {
@@ -19,8 +19,8 @@ export function Header() {
                 <button className="login" onClick={removeAuthorization}>Log out</button> :
                 <Link to={"/authorization"}>
                     <button className="login">Sing in</button>
-                </Link>}
-            <Outlet/>
+                </Link>
+            }
         </header>
     );
 }

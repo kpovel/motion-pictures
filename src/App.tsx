@@ -2,17 +2,23 @@ import "./App.css";
 import {Header} from "./components/header/header";
 import {MovieFilter} from "./components/movieFilter/movieFilter";
 import {MovieList} from "./components/movieList/movieList";
-import {useLocation} from "react-router-dom";
+import {Outlet, useLocation} from "react-router-dom";
+import React from "react";
 
 function App() {
     const location = useLocation();
+    const isOpenAuthorizationMenu = location.pathname === "/authorization";
+    const isMainPage = isOpenAuthorizationMenu || location.pathname === "/";
+
     return (
-        <div className={location.pathname === "/authorization"? "App App__disabled" : "App"}>
+        <div className={isOpenAuthorizationMenu ? "App App__disabled" : "App"}>
             <Header/>
-            <main className="main-display">
-                <MovieFilter />
-                <MovieList/>
-            </main>
+            {isMainPage ?
+                <main className="main-display">
+                    <MovieFilter/>
+                    <MovieList/>
+                </main> : ""}
+            <Outlet/>
         </div>
     );
 }

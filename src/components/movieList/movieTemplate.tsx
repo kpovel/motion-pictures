@@ -2,7 +2,7 @@ import {MovieList} from "../../types";
 import {useDispatch, useSelector} from "react-redux";
 import {movieToSelected, movieToWatchLater} from "../../store/action/action";
 import {useCookies} from "react-cookie";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export function MovieTemplate({poster_path, backdrop_path, vote_average, title, id}: MovieList) {
     const imagePath = poster_path || backdrop_path;
@@ -35,7 +35,7 @@ export function MovieTemplate({poster_path, backdrop_path, vote_average, title, 
 
     return (
         <article className="movie" key={id}>
-            <img className="movie_preview" src={imageLink} alt={title}/>
+            <img className="movie-cover" src={imageLink} alt={title}/>
             <div className="description-movie">
                 <div className="about-movie">
                     <div className="first-row">
@@ -51,9 +51,11 @@ export function MovieTemplate({poster_path, backdrop_path, vote_average, title, 
                 </div>
                 <div className="details">
                     <hr/>
-                    <button className="details-button">
-                        Details
-                    </button>
+                    <Link to={`movie/${id}`}>
+                        <button className="details-button">
+                            Details
+                        </button>
+                    </Link>
                 </div>
             </div>
         </article>
