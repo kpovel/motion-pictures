@@ -30,22 +30,15 @@
 .details-movie {
     margin: 20px auto;
     width: 80vw;
-    & > * {
-        color: black;
-    }
 }
 
 .details-nav {
     display: flex;
     gap: 20px;
-    & > * {
+    & * {
         color: black;
+        background: transparent;
     }
-}
-
-.nav-button {
-    color: black;
-    background: 0;
 }
 
 .details-row {

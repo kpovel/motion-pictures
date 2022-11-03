@@ -1,4 +1,4 @@
-import {NavLink, useLoaderData, useLocation} from "react-router-dom";
+import {NavLink, Outlet, useLoaderData} from "react-router-dom";
 import {movieList} from "../../data/movieData";
 import {LoaderFunctionArgs} from "react-router";
 import {MovieList} from "../../types";
@@ -11,7 +11,6 @@ export function loader({params}: LoaderFunctionArgs) {
 }
 
 export function DetailsMovie() {
-    const location = useLocation();
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const movieLoader: MovieList = useLoaderData();
@@ -19,7 +18,6 @@ export function DetailsMovie() {
     const backgroundPath = movieLoader.backdrop_path || posterPath;
     const backgroundImageLink = `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${backgroundPath}`;
     const posterLink = `https://www.themoviedb.org/t/p/w600_and_h900_bestv2${posterPath}`;
-    const originalLanguage = new Intl.DisplayNames([], {type: "language"}).of(movieLoader.original_language);
 
     const DetailImage = createGlobalStyle`
         .background-image {
@@ -47,51 +45,19 @@ export function DetailsMovie() {
             <section>
                 <div className="details-movie">
                     <nav className="details-nav">
-                        <NavLink to={`${location.pathname}`}>
+                        <NavLink to={`/movie/${movieLoader.id}`}>
                             <button className="nav-button">Details</button>
                         </NavLink>
-                        <NavLink to={`${location.pathname}/video`}>
+                        <NavLink to={`/movie/${movieLoader.id}/video`}>
                             <button className="nav-button">Video</button>
                         </NavLink>
-                        <NavLink to={`${location.pathname}/actors`}>
+                        <NavLink to={`/movie/${movieLoader.id}/actors`}>
                             <button className="nav-button">Actors</button>
                         </NavLink>
                     </nav>
                     <hr/>
-                    <div className="movie-info">
-                        <div className="details-row">
-                            <div className="details-row__title">Original title</div>
-                            <div className="details-row__value">{movieLoader.original_title}</div>
-                        </div>
-                        <hr/>
-                        <div className="details-row">
-                            <div className="details-row__title">Original language</div>
-                            <div className="details-row__value">{originalLanguage}</div>
-                        </div>
-                        <hr/>
-                        <div className="details-row">
-                            <div className="details-row__title">Country</div>
-                            <div className="details-row__value">{movieLoader.original_language}</div>
-                        </div>
-                        <hr/>
-                        <div className="details-row">
-                            <div className="details-row__title">Status</div>
-                            <div className="details-row__value">{movieLoader.release_date ? "Released" : "Unreleased"}</div>
-                        </div>
-                        <hr/>
-                        {!!movieLoader.release_date &&
-                            <>
-                                <div className="details-row">
-                                    <div className="details-row__title">Release date</div>
-                                    <div className="details-row__value">{movieLoader.release_date}</div>
-                                </div>
-                                <hr/>
-                            </>
-                        }
-                        <div className="details-row">
-                            <div className="details-row__title">Adult</div>
-                            <div className="details-row__value">{movieLoader.adult ? "Yes" : "No"}</div>
-                        </div>
+                    <div id="detail">
+                        <Outlet/>
                     </div>
                 </div>
             </section>

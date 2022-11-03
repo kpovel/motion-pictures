@@ -9,6 +9,9 @@ import ErrorPage from "./components/errorPage/errorPage";
 import {AuthorizationMenu} from "./components/authorizationMenu/authorizationMenu";
 import {CookiesProvider} from "react-cookie";
 import {DetailsMovie, loader as movieLoader} from "./components/detailsMovie/detailsMovie";
+import {DetailsMovieInfo} from "./components/detailsMovie/detailsMovieInfo";
+import {DetailsMovieActors} from "./components/detailsMovie/detailsMovieActors";
+import {DetailsMovieVideo} from "./components/detailsMovie/detailsMovieVideo";
 
 const router = createBrowserRouter([
     {
@@ -21,9 +24,27 @@ const router = createBrowserRouter([
                 element: <AuthorizationMenu/>
             },
             {
-                path: "movie/:movieID",
+                path: "/movie/:movieID",
                 element: <DetailsMovie/>,
                 loader: movieLoader,
+                children: [
+                    {
+                        path: "",
+                        element: <DetailsMovieInfo/>,
+                        loader: movieLoader
+                    },
+                    {
+                        path: "video",
+                        element: <DetailsMovieVideo/>,
+                        loader: movieLoader
+
+                    },
+                    {
+                        path: "actors",
+                        element: <DetailsMovieActors/>,
+                        loader: movieLoader
+                    }
+                ]
             }
         ]
     }
