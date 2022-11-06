@@ -5,17 +5,16 @@ import {UndefinedFilterError} from "../../../customHandlerErrors/handleErrors";
 
 export function SelectMovieFilter({option, labelName, reduxStateSetting}: MovieFilter) {
     const dispatch = useDispatch();
-    const usageState = reduxStateSetting === "setSortBy" ? "setSortBy" : "setFilterYear";
-    const selectedFilter = useSelector((state: any) => state[usageState]);
+    const selectedFilter = useSelector((state: any) => state[reduxStateSetting]);
 
-    function selectFilter(event: any) {
+    function selectFilter(value: string) {
         dispatch(resetPageNumber(1));
         switch (reduxStateSetting) {
             case "setSortBy":
-                dispatch(selectFilterSort(event.target.value));
+                dispatch(selectFilterSort(value));
                 break;
             case "setFilterYear":
-                dispatch(selectFilterYear(event.target.value));
+                dispatch(selectFilterYear(value));
                 break;
             default:
                 alert(new UndefinedFilterError("Undefined filter"));
@@ -26,7 +25,7 @@ export function SelectMovieFilter({option, labelName, reduxStateSetting}: MovieF
         <div className="sort-menu">
             <label className="title-sort-menu">{labelName}</label>
             <div className="dropdown-menu">
-                <select value={selectedFilter} className="sort-menu__sort" onChange={selectFilter}>
+                <select value={selectedFilter} className="sort-menu__sort" onChange={e => selectFilter(e.target.value)}>
                     {option.map((option, index) => {
                         return <option key={index} value={option.value}>{option.label}</option>;
                     })}
