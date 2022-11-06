@@ -4,8 +4,8 @@ import {Link, useNavigate} from "react-router-dom";
 import {FormEvent, useRef, useState} from "react";
 import {useCookies} from "react-cookie";
 import {add} from "date-fns";
-import eye from "../img/eye.svg";
-import eyeSlash from "../img/eye-slash.svg";
+import eye from "../../img/eye.svg";
+import eyeSlash from "../../img/eye-slash.svg";
 import {useClickOutside} from "../../customHooks/useClickOutside";
 
 export function AuthorizationMenu() {

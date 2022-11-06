@@ -15,7 +15,6 @@
     justify-content: space-between;
     width: 35vw;
     min-width: 400px;
-
     margin: 20px;
     border: 2px solid grey;
     box-shadow: 5px 5px 9px 1px #5f6283;
@@ -35,7 +34,7 @@ img.movie-cover {
 }
 
 .icon-bookmark {
-    background: url("../img/bookmark-white.svg") no-repeat;
+    background: url("../../img/bookmark-white.svg") no-repeat;
     width: 30px;
     height: 30px;
     zoom: 80%;
@@ -43,11 +42,11 @@ img.movie-cover {
     cursor: pointer;
 
     &__unsaved {
-        background: url("../img/bookmark-white.svg") no-repeat;
+        background: url("../../img/bookmark-white.svg") no-repeat;
     }
 
     &__saved {
-        background: url("../img/bookmark-black.svg") no-repeat;
+        background: url("../../img/bookmark-black.svg") no-repeat;
     }
 }
 
