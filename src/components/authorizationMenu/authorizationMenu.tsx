@@ -45,7 +45,7 @@ export function AuthorizationMenu() {
             <div ref={domNode} className="authorization">
                 <div className="authorization-title authorization-title__right">
                     <div></div>
-                    <h2 className="singin-title">Sing in</h2>
+                    <h2 className="singin-title">Sign in</h2>
                     <Link to="/">
                         <button className="button-close-menu">{"\u2715"}</button>
                     </Link>

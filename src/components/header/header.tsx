@@ -18,7 +18,7 @@ export function Header() {
             {isUserAuthorized ?
                 <button className="login" onClick={removeAuthorization}>Log out</button> :
                 <Link to={"/authorization"}>
-                    <button className="login">Sing in</button>
+                    <button className="login">Sign in</button>
                 </Link>
             }
         </header>
