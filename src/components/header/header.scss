@@ -41,9 +41,8 @@ button {
 .movie-search {
     width: 2rem;
     height: 2rem;
+    background-image: url("/src/img/search-button.svg");
     background-repeat: no-repeat;
-    background-image: url("src/img/search-button.svg");
+    background-position: center;
     background-color: transparent;
-    border: none;
-    cursor: pointer;
 }
