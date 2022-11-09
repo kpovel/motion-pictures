@@ -7,7 +7,7 @@ export function Header() {
     const isUserAuthorized = cookie.isAuthorized === "true";
 
     function removeAuthorization() {
-        setCookie("isAuthorized", false);
+        setCookie("isAuthorized", false, {path: "/"});
     }
 
     return (
