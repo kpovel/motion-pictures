@@ -4,6 +4,10 @@ import {checkboxGenre} from "../../data/movieData";
 import {useState} from "react";
 import {filterMovieList} from "./filterMovieList";
 
+export const indicatorsMovie = {
+    low: "low",
+    high: "high"
+};
 
 function ChoiceGenre({handleChange, selectedValue}:
                          {handleChange: (genreID: number) => void, selectedValue: number | null}) {
@@ -35,21 +39,21 @@ function RadioButton({name, label, checked, handleChange}:
 
 export function MovieSearch() {
     const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
-    const [isHighRating, setIsHighRating] = useState<boolean | null>(null);
-    const [selectedPopularity, setSelectedPopularity] = useState<boolean | null>(null);
+    const [movieRating, setMovieRating] = useState<string | null>(null);
+    const [selectedPopularity, setSelectedPopularity] = useState<string | null>(null);
 
 
     function handleSelectGenre(genreID: number) {
         setSelectedGenre(genreID);
     }
 
-    function handleSelectRating(rating: boolean) {
-        setIsHighRating(rating);
+    function handleSelectRating(rating: string) {
+        setMovieRating(rating);
     }
 
     function handleGetResults() {
-        filterMovieList(selectedGenre, isHighRating, selectedPopularity);
-    //    todo: offer movie after answering all questions
+        filterMovieList(selectedGenre, movieRating, selectedPopularity);
+        //    todo: offer movie after answering all questions
     }
 
     return (
@@ -64,26 +68,26 @@ export function MovieSearch() {
                 <h2>Choose the rating of the movie</h2>
                 <RadioButton name="rating"
                              label="Low rating"
-                             checked={isHighRating === false}
-                             handleChange={() => handleSelectRating(false)}
+                             checked={movieRating === indicatorsMovie.low}
+                             handleChange={() => handleSelectRating(indicatorsMovie.low)}
                 />
                 <RadioButton name="rating"
                              label="High rating"
-                             checked={!!isHighRating}
-                             handleChange={() => handleSelectRating(true)}
+                             checked={movieRating === indicatorsMovie.high}
+                             handleChange={() => handleSelectRating(indicatorsMovie.high)}
                 />
             </section>
             <section>
                 <h2>Choose the popularity of the movie</h2>
                 <RadioButton name="popularity"
                              label="Low popularity"
-                             checked={selectedPopularity === false}
-                             handleChange={() => setSelectedPopularity(false)}
+                             checked={selectedPopularity === indicatorsMovie.low}
+                             handleChange={() => setSelectedPopularity(indicatorsMovie.low)}
                 />
                 <RadioButton name="popularity"
                              label="High popularity"
-                             checked={!!selectedPopularity}
-                             handleChange={() => setSelectedPopularity(true)}
+                             checked={selectedPopularity === indicatorsMovie.high}
+                             handleChange={() => setSelectedPopularity(indicatorsMovie.high)}
                 />
             </section>
             <section>
