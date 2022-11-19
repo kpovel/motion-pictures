@@ -17,7 +17,7 @@ export function Header() {
             </Link>
             <div className="header-buttons">
                 <Link to={"/search"}>
-                    <button className="movie-search"/>
+                    <button className="movie-search__button"/>
                 </Link>
                 {isUserAuthorized ?
                     <button className="login" onClick={removeAuthorization}>Log out</button> :
