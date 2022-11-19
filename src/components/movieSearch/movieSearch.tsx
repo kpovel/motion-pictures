@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import "./movieSearch.css";
 import {checkboxGenre} from "../../data/movieData";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {filterMovieList} from "./filterMovieList";
 
 export const indicatorsMovie = {
@@ -42,14 +42,35 @@ export function MovieSearch() {
     const [movieRating, setMovieRating] = useState<string | null>(null);
     const [selectedPopularity, setSelectedPopularity] = useState<string | null>(null);
 
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }, []);
 
     function handleSelectGenre(genreID: number) {
         setSelectedGenre(genreID);
+        scrollDown();
     }
 
     function handleSelectRating(rating: string) {
         setMovieRating(rating);
+        scrollDown();
     }
+
+    function handleSelectPopularity(popularity: string) {
+        setSelectedPopularity(popularity);
+        scrollDown();
+    }
+
+    function scrollDown() {
+        window.scrollBy({
+            top: window.innerHeight,
+            behavior: "smooth"
+        });
+    }
+
 
     function handleGetResults() {
         filterMovieList(selectedGenre, movieRating, selectedPopularity);
@@ -82,17 +103,17 @@ export function MovieSearch() {
                 <RadioButton name="popularity"
                              label="Low popularity"
                              checked={selectedPopularity === indicatorsMovie.low}
-                             handleChange={() => setSelectedPopularity(indicatorsMovie.low)}
+                             handleChange={() => handleSelectPopularity(indicatorsMovie.low)}
                 />
                 <RadioButton name="popularity"
                              label="High popularity"
                              checked={selectedPopularity === indicatorsMovie.high}
-                             handleChange={() => setSelectedPopularity(indicatorsMovie.high)}
+                             handleChange={() => handleSelectPopularity(indicatorsMovie.high)}
                 />
             </section>
             <section>
                 <h2>Results</h2>
-                <input type="button" value="Get results" onClick={handleGetResults}/>
+                <button type="button" onClick={handleGetResults}>Get results</button>
             </section>
         </div>
     );
