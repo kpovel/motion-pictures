@@ -22,7 +22,8 @@ module.exports = {
     ],
     "rules": {
         "react/react-in-jsx-scope": 0,
-        "react/jsx-indent-props": 0,
+        "react/jsx-indent": [2, 4],
+        "react/jsx-indent-props": [2, "first"],
         "react/prop-types": 0,
         "indent": [
             "error",
