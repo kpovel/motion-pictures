@@ -1,46 +1,21 @@
 /* eslint-disable indent */
 import "./movieSearch.css";
-import {checkboxGenre} from "../../data/movieData";
 import {useEffect, useState} from "react";
 import {filterMovieList} from "./filterMovieList";
+import {ProposedMovies} from "./proposedMovies";
+import {ChoiceGenre} from "./movieQuestion/choiceGenre";
+import {RadioButton} from "./movieQuestion/radioButton";
 
 export const indicatorsMovie = {
     low: "low",
     high: "high"
 };
 
-function ChoiceGenre({handleChange, selectedValue}:
-                         {handleChange: (genreID: number) => void, selectedValue: number | null}) {
-    return (
-        <div>
-            {checkboxGenre.map((value, index) => {
-                return <label key={index} className="input-genre">
-                    <input type="radio"
-                           name="genre"
-                           checked={selectedValue === value.id}
-                           onChange={() => handleChange(value.id)}
-                    />
-                    {value.name}
-                </label>;
-            })}
-        </div>
-    );
-}
-
-function RadioButton({name, label, checked, handleChange}:
-                         {name: string, label: string, checked: boolean, handleChange: () => void}) {
-    return (
-        <label>
-            <input type="radio" name={name} checked={checked} onChange={handleChange}/>
-            {label}
-        </label>
-    );
-}
-
 export function MovieSearch() {
     const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
     const [movieRating, setMovieRating] = useState<string | null>(null);
     const [selectedPopularity, setSelectedPopularity] = useState<string | null>(null);
+    const noAllQuestionAnswered = !selectedGenre || !movieRating || !selectedPopularity;
 
     useEffect(() => {
         window.scrollTo({
@@ -71,49 +46,47 @@ export function MovieSearch() {
         });
     }
 
-
-    function handleGetResults() {
-        filterMovieList(selectedGenre, movieRating, selectedPopularity);
-        //    todo: offer movie after answering all questions
-    }
-
     return (
         <div className="movie-search">
-            <section>
+            <section className="movie-search__item">
                 <div>
                     <h2>Choose the genre of the movie</h2>
                     <ChoiceGenre handleChange={handleSelectGenre} selectedValue={selectedGenre}/>
                 </div>
             </section>
-            <section>
+            <section className="movie-search__item">
                 <h2>Choose the rating of the movie</h2>
                 <RadioButton name="rating"
                              label="Low rating"
                              checked={movieRating === indicatorsMovie.low}
-                             handleChange={() => handleSelectRating(indicatorsMovie.low)}
+                             onChange={() => handleSelectRating(indicatorsMovie.low)}
                 />
                 <RadioButton name="rating"
                              label="High rating"
                              checked={movieRating === indicatorsMovie.high}
-                             handleChange={() => handleSelectRating(indicatorsMovie.high)}
+                             onChange={() => handleSelectRating(indicatorsMovie.high)}
                 />
             </section>
-            <section>
+            <section className="movie-search__item">
                 <h2>Choose the popularity of the movie</h2>
                 <RadioButton name="popularity"
                              label="Low popularity"
                              checked={selectedPopularity === indicatorsMovie.low}
-                             handleChange={() => handleSelectPopularity(indicatorsMovie.low)}
+                             onChange={() => handleSelectPopularity(indicatorsMovie.low)}
                 />
                 <RadioButton name="popularity"
                              label="High popularity"
                              checked={selectedPopularity === indicatorsMovie.high}
-                             handleChange={() => handleSelectPopularity(indicatorsMovie.high)}
+                             onChange={() => handleSelectPopularity(indicatorsMovie.high)}
                 />
             </section>
-            <section>
+            <section className="movie-search__item">
                 <h2>Results</h2>
-                <button type="button" onClick={handleGetResults}>Get results</button>
+                {noAllQuestionAnswered ?
+                    "Answer all the questions" :
+                    <ProposedMovies
+                        filterMovieList={() => filterMovieList(selectedGenre, movieRating, selectedPopularity)}/>
+                }
             </section>
         </div>
     );
