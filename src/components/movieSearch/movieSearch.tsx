@@ -49,13 +49,11 @@ export function MovieSearch() {
     return (
         <div className="movie-search">
             <section className="movie-search__item">
-                <div>
-                    <h2>Choose the genre of the movie</h2>
-                    <ChoiceGenre handleChange={handleSelectGenre} selectedValue={selectedGenre}/>
-                </div>
+                <h2 className="movie-search__title">Choose the genre of the movie</h2>
+                <ChoiceGenre handleChange={handleSelectGenre} selectedValue={selectedGenre}/>
             </section>
             <section className="movie-search__item">
-                <h2>Choose the rating of the movie</h2>
+                <h2 className="movie-search__title">Choose the rating of the movie</h2>
                 <RadioButton name="rating"
                              label="Low rating"
                              checked={movieRating === indicatorsMovie.low}
@@ -68,7 +66,7 @@ export function MovieSearch() {
                 />
             </section>
             <section className="movie-search__item">
-                <h2>Choose the popularity of the movie</h2>
+                <h2 className="movie-search__title">Choose the popularity of the movie</h2>
                 <RadioButton name="popularity"
                              label="Low popularity"
                              checked={selectedPopularity === indicatorsMovie.low}
@@ -81,7 +79,7 @@ export function MovieSearch() {
                 />
             </section>
             <section className="movie-search__item">
-                <h2>Results</h2>
+                <h2 className="movie-search__title">Results</h2>
                 {noAllQuestionAnswered ?
                     "Answer all the questions" :
                     <ProposedMovies
