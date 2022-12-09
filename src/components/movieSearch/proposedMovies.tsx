@@ -3,7 +3,8 @@ import {useState} from "react";
 import {Link} from "react-router-dom";
 import {checkboxGenre} from "../../data/movieData";
 
-export function ProposedMovies({filterMovieList}: {filterMovieList: () => MovieList[]}) {
+export function ProposedMovies({filterMovieList, searchMovieAgain}:
+                                   {filterMovieList: () => MovieList[], searchMovieAgain: () => void}) {
     const filteredMovieList = filterMovieList();
     const [numberOfSelectedMovie, setNumberOfSelectedMovie] = useState<number>(0);
     const noMoreMovies = numberOfSelectedMovie > filteredMovieList.length - 1;
@@ -19,7 +20,7 @@ export function ProposedMovies({filterMovieList}: {filterMovieList: () => MovieL
     return (
         <div>
             {noMoreMovies ?
-                <p>No more movie with the filters. Can you try movie again?</p> :
+                <p>No more movie with the filters. Can you try search movie again?</p> :
                 <div className="movie-poster">
                     <img className="movie-poster__image" src={imageLink} alt={selectedMovie?.title}/>
                     <div className="movie-info">
@@ -50,7 +51,7 @@ export function ProposedMovies({filterMovieList}: {filterMovieList: () => MovieL
                         <Link to={"/"}>
                             <button className="rate-movie__button">No</button>
                         </Link>
-                        <button className="rate-movie__button">Yes</button>
+                        <button className="rate-movie__button" onClick={searchMovieAgain}>Yes</button>
                     </> :
                     <>
                         <Link to={`/movie/${selectedMovie.id}`}>

@@ -11,6 +11,20 @@ export const indicatorsMovie = {
     high: "high"
 };
 
+function scrollToTopPage() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+function scrollDown() {
+    window.scrollBy({
+        top: window.innerHeight,
+        behavior: "smooth"
+    });
+}
+
 export function MovieSearch() {
     const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
     const [movieRating, setMovieRating] = useState<string | null>(null);
@@ -18,32 +32,30 @@ export function MovieSearch() {
     const noAllQuestionAnswered = !selectedGenre || !movieRating || !selectedPopularity;
 
     useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        scrollToTopPage();
     }, []);
 
-    function handleSelectGenre(genreID: number) {
+    function handleSelectGenre(genreID: number | null) {
         setSelectedGenre(genreID);
         scrollDown();
     }
 
-    function handleSelectRating(rating: string) {
+    function handleSelectRating(rating: string | null) {
         setMovieRating(rating);
         scrollDown();
     }
 
-    function handleSelectPopularity(popularity: string) {
+    function handleSelectPopularity(popularity: string | null) {
         setSelectedPopularity(popularity);
         scrollDown();
     }
 
-    function scrollDown() {
-        window.scrollBy({
-            top: window.innerHeight,
-            behavior: "smooth"
-        });
+    function resetAllMoviePreference() {
+        setSelectedGenre(null);
+        setMovieRating(null);
+        setSelectedPopularity(null);
+
+        scrollToTopPage();
     }
 
     return (
@@ -83,7 +95,9 @@ export function MovieSearch() {
                 {noAllQuestionAnswered ?
                     "Answer all the questions" :
                     <ProposedMovies
-                        filterMovieList={() => filterMovieList(selectedGenre, movieRating, selectedPopularity)}/>
+                        filterMovieList={() => filterMovieList(selectedGenre, movieRating, selectedPopularity)}
+                        searchMovieAgain={() => resetAllMoviePreference()}
+                    />
                 }
             </section>
         </div>
