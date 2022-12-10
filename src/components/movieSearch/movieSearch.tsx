@@ -95,8 +95,8 @@ export function MovieSearch() {
                 {noAllQuestionAnswered ?
                     "Answer all the questions" :
                     <ProposedMovies
-                        filterMovieList={() => filterMovieList(selectedGenre, movieRating, selectedPopularity)}
-                        searchMovieAgain={() => resetAllMoviePreference()}
+                        filteredMovieList={filterMovieList(selectedGenre, movieRating, selectedPopularity)}
+                        searchMovieAgain={resetAllMoviePreference}
                     />
                 }
             </section>

@@ -3,9 +3,8 @@ import {useState} from "react";
 import {Link} from "react-router-dom";
 import {checkboxGenre} from "../../data/movieData";
 
-export function ProposedMovies({filterMovieList, searchMovieAgain}:
-                                   {filterMovieList: () => MovieList[], searchMovieAgain: () => void}) {
-    const filteredMovieList = filterMovieList();
+export function ProposedMovies({filteredMovieList, searchMovieAgain}:
+                                   {filteredMovieList: MovieList[], searchMovieAgain: () => void}) {
     const [numberOfSelectedMovie, setNumberOfSelectedMovie] = useState<number>(0);
     const noMoreMovies = numberOfSelectedMovie > filteredMovieList.length - 1;
     const selectedMovie = filteredMovieList[numberOfSelectedMovie];
