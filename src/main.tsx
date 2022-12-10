@@ -12,6 +12,7 @@ import {DetailsMovie, loader as movieLoader} from "./components/detailsMovie/det
 import {DetailsMovieInfo} from "./components/detailsMovie/detailsMovieInfo";
 import {DetailsMovieActors} from "./components/detailsMovie/detailsMovieActors";
 import {DetailsMovieVideo} from "./components/detailsMovie/detailsMovieVideo";
+import {MovieSearch} from "./components/movieSearch/movieSearch";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
             {
                 path: "/authorization",
                 element: <AuthorizationMenu/>
+            },
+            {
+                path: "/search",
+                element: <MovieSearch/>
             },
             {
                 path: "/movie/:movieID",

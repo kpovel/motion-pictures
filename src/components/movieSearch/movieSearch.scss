@@ -1,0 +1,126 @@
+html {
+    scroll-snap-type: y mandatory;
+}
+
+.movie-search {
+    &__item {
+        block-size: 100vh;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+
+        display: grid;
+        place-content: center;
+        justify-items: center;
+    }
+
+    &__title {
+        font-size: 1.7em;
+        text-align: center;
+    }
+}
+
+.input-genre {
+    display: block;
+}
+
+.rate-movie {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 1em;
+
+    &__button {
+        background-color: #032541;
+        width: 10em;
+
+        &-grey {
+            background-color: rgba(3, 37, 65, 0.4);
+        }
+    }
+}
+
+.movie-poster {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    margin-top: 1em;
+
+    &__image {
+        object-fit: cover;
+        border-radius: 24px 0 0 24px;
+        background-image: linear-gradient(90deg, #A100FFFF 0%, #71C4FFFF 100%);
+        aspect-ratio: 11/16;
+        height: 30vw;
+        min-height: 430px;
+        max-height: 580px;
+    }
+}
+
+.movie-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 650px;
+
+    &__title {
+        font-size: 2em;
+        font-weight: 700;
+        margin-bottom: 0.5em;
+    }
+
+    &__facts {
+        display: flex;
+        gap: 0.5em;
+    }
+
+    &__overview {
+        margin: 0;
+        font-size: 1.2em;
+        line-height: 1.5em;
+    }
+}
+
+@media (max-width: 1020px) {
+    .movie-poster {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        &__image {
+            border-radius: 24px 24px 0 0;
+            aspect-ratio: 1/1;
+            height: 30vh;
+            min-height: 200px;
+            max-height: 300px;
+            width: 45vw;
+            max-width: 500px;
+        }
+    }
+
+    .movie-info {
+        width: auto;
+        max-width: 600px;
+        padding: 0 15px;
+
+        &__title {
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        &__overview {
+            font-size: 1em;
+            line-height: 1.2em;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .movie-poster {
+        &__image {
+            aspect-ratio: 16/11;
+            height: 10vh;
+            min-height: 200px;
+            width: 100vw;
+        }
+    }
+}

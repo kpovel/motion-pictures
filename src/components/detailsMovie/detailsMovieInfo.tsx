@@ -8,7 +8,7 @@ export function DetailsMovieInfo() {
     const originalLanguage = new Intl.DisplayNames([], {type: "language"}).of(movieLoader.original_language);
 
     return ( 
-        <div className="movie-info">
+        <div className="movie-cover">
             <div className="details-row">
                 <div className="details-row__title">Original title</div>
                 <div className="details-row__value">{movieLoader.original_title}</div>

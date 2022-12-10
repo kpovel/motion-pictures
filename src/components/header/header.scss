@@ -7,6 +7,10 @@
     width: 100vw;
     height: 68px;
     background-color: #40a2c5;
+    &-buttons {
+        display: flex;
+        align-items: center;
+    }
 }
 
 button {
@@ -20,20 +24,25 @@ button {
     transition: border-color 0.25s;
     color: white;
 
-    &.tab_name {
-        background-color: #40a2c5;
+    &.home-button {
+        background-color: transparent;
     }
 
     &.login {
         background-color: #4bd241;
-        margin: 20px;
+        margin: 0 15px;
+
+        &:hover {
+            border-color: #646CFFFF;
+        }
     }
 }
 
-.login:hover {
-    border-color: #646CFFFF;
-
-    &.tab_name {
-        border-color: transparent;
-    }
+.movie-search__button {
+    width: 2rem;
+    height: 2rem;
+    background-image: url("/src/img/search-button.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
 }

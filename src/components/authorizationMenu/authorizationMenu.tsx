@@ -28,7 +28,7 @@ export function AuthorizationMenu() {
 
         if (isCorrectAuthorizationData) {
             const expiresDate = add(new Date(), {months: 1});
-            setCookie("isAuthorized", true, {expires: expiresDate});
+            setCookie("isAuthorized", true, {expires: expiresDate, path: "/"});
 
             navigate("/");
         }

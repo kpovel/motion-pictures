@@ -7,20 +7,25 @@ export function Header() {
     const isUserAuthorized = cookie.isAuthorized === "true";
 
     function removeAuthorization() {
-        setCookie("isAuthorized", false);
+        setCookie("isAuthorized", false, {path: "/"});
     }
 
     return (
         <header className="header">
             <Link to={"/"}>
-                <button className="tab_name">Home</button>
+                <button className="home-button">Home</button>
             </Link>
-            {isUserAuthorized ?
-                <button className="login" onClick={removeAuthorization}>Log out</button> :
-                <Link to={"/authorization"}>
-                    <button className="login">Sign in</button>
+            <div className="header-buttons">
+                <Link to={"/search"}>
+                    <button className="movie-search__button"/>
                 </Link>
-            }
+                {isUserAuthorized ?
+                    <button className="login" onClick={removeAuthorization}>Log out</button> :
+                    <Link to={"/authorization"}>
+                        <button className="login">Sign in</button>
+                    </Link>
+                }
+            </div>
         </header>
     );
 }
