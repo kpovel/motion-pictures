@@ -18,9 +18,12 @@ module.exports = {
     },
     "plugins": [
         "react",
+        "react-hooks",
         "@typescript-eslint"
     ],
     "rules": {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
         "react/react-in-jsx-scope": 0,
         "react/jsx-indent": [2, 4],
         "react/jsx-indent-props": [2, "first"],
