@@ -1,13 +1,25 @@
 /* eslint-disable indent */
 import "./movieList.css";
 import {MovieTemplate} from "./movieTemplate";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import ErrorNoSelectedMovie from "../errorPage/errorNoSelectedMovie";
 import {organizeListOfMovies} from "./organizeListOfMovies";
+import {useEffect} from "react";
+import {numberPages} from "../../store/action/action";
 
 export function MovieList() {
+    const dispatch = useDispatch();
     const currentPage = useSelector(({setPage}: {setPage: number}) => setPage);
-    const sortedMovieList = organizeListOfMovies();
+    const selectedFilterSortBy = useSelector(({setSortBy}: {setSortBy: string}) => setSortBy);
+    const selectedFilterYear = useSelector(({setFilterYear}: {setFilterYear: string}) => setFilterYear);
+    const selectedGenres = useSelector(({setCheckboxState}: {setCheckboxState: number[]}) => setCheckboxState);
+    const selectedMovies = useSelector(({addMovieToSelected}: {addMovieToSelected: number[]}) => addMovieToSelected);
+    const watchLaterMovies = useSelector(({addMovieToWatchLater}: {addMovieToWatchLater: number[]}) => addMovieToWatchLater);
+    const sortedMovieList = organizeListOfMovies(selectedFilterSortBy, selectedFilterYear, selectedGenres, selectedMovies, watchLaterMovies);
+
+    useEffect(() => {
+        dispatch(numberPages(Math.ceil(sortedMovieList.length / 10)));
+    }, [dispatch, sortedMovieList]);
 
     return (
         <div className="list">

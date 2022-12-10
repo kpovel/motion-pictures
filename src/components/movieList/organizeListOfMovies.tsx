@@ -1,18 +1,12 @@
-import {useDispatch, useSelector} from "react-redux";
+/* eslint-disable indent */
 import {movieList} from "../../data/movieData";
 import parseISO from "date-fns/parseISO";
-import {useEffect} from "react";
-import {numberPages} from "../../store/action/action";
 
-export function organizeListOfMovies() {
-    const dispatch = useDispatch();
-
-    const selectedFilterSortBy = useSelector(({setSortBy}: {setSortBy: string}) => setSortBy);
-    const selectedFilterYear = useSelector(({setFilterYear}: {setFilterYear: string}) => setFilterYear);
-    const selectedGenres = useSelector(({setCheckboxState}: {setCheckboxState: number[]}) => setCheckboxState);
-    const selectedMovies = useSelector(({addMovieToSelected}: {addMovieToSelected: number[]}) => addMovieToSelected);
-    const watchLaterMovies = useSelector(({addMovieToWatchLater}: {addMovieToWatchLater: number[]}) => addMovieToWatchLater);
-
+export function organizeListOfMovies(selectedFilterSortBy: string,
+                                     selectedFilterYear: string,
+                                     selectedGenres: number[],
+                                     selectedMovies: number[],
+                                     watchLaterMovies: number[]) {
     const filteredMovieListByYearRelease = movieList.filter(item => {
         if (selectedFilterYear === "noSelected") return true;
         return parseISO(item.release_date).getFullYear().toString() === selectedFilterYear;
@@ -45,10 +39,6 @@ export function organizeListOfMovies() {
             default:
                 return true;
         }
-    });
-
-    useEffect(() => {
-        dispatch(numberPages(Math.ceil(filteredMovieListByUserWishes.length / 10)));
     });
 
     return filteredMovieListByUserWishes.sort((a, b): number => {
