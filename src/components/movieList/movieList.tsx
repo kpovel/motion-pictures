@@ -12,7 +12,7 @@ export function MovieList() {
     const currentPage = useSelector(({setPage}: {setPage: number}) => setPage);
     const selectedFilterSortBy = useSelector(({setSortBy}: {setSortBy: string}) => setSortBy);
     const selectedFilterYear = useSelector(({setFilterYear}: {setFilterYear: string}) => setFilterYear);
-    const selectedGenres = useSelector(({setCheckboxState}: {setCheckboxState: number[]}) => setCheckboxState);
+    const selectedGenres = useSelector(({selectMovieGenre}: {selectMovieGenre: number[]}) => selectMovieGenre);
     const selectedMovies = useSelector(({addMovieToSelected}: {addMovieToSelected: number[]}) => addMovieToSelected);
     const watchLaterMovies = useSelector(({addMovieToWatchLater}: {addMovieToWatchLater: number[]}) => addMovieToWatchLater);
     const sortedMovieList = organizeListOfMovies(selectedFilterSortBy, selectedFilterYear, selectedGenres, selectedMovies, watchLaterMovies);

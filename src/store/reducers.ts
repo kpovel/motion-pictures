@@ -87,7 +87,7 @@ function setSortBy(state = savedSortBy, action: { type: string, sortBy: string }
 
 const savedCheckedGenre = JSON.parse(localStorage.getItem("checkedGenre") || "[]");
 
-function setCheckboxState(state = savedCheckedGenre, action: { type: string, genre: number }) {
+function selectMovieGenre(state = savedCheckedGenre, action: {type: string, genre: number}) {
     const newCheckedList = new Set(state);
     const isSelectThisFilter = newCheckedList.has(action.genre);
 
@@ -158,7 +158,7 @@ const movie = combineReducers({
     setSortBy,
     setNumberPage,
     setFilterYear,
-    setCheckboxState,
+    selectMovieGenre,
     addMovieToSelected,
     addMovieToWatchLater
 });
