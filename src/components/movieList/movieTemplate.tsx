@@ -4,7 +4,15 @@ import {movieToSelected, movieToWatchLater} from "../../store/action/action";
 import {useCookies} from "react-cookie";
 import {Link, useNavigate} from "react-router-dom";
 
-export function MovieTemplate({poster_path, backdrop_path, vote_average, title, id}: MovieList) {
+type MovieTemplateProps = Readonly<{
+    poster_path: MovieList["poster_path"],
+    backdrop_path: MovieList["backdrop_path"],
+    vote_average: MovieList["vote_average"],
+    title: MovieList["title"],
+    id: MovieList["id"],
+}>;
+
+export function MovieTemplate({poster_path, backdrop_path, vote_average, title, id}: MovieTemplateProps) {
     const imagePath = poster_path || backdrop_path;
     const imageLink = `https://image.tmdb.org/t/p/w500/${imagePath}`;
 
