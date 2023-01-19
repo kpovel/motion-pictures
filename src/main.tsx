@@ -13,6 +13,7 @@ import {DetailsMovieInfo} from "./components/detailsMovie/detailsMovieInfo";
 import {DetailsMovieActors} from "./components/detailsMovie/detailsMovieActors";
 import {DetailsMovieVideo} from "./components/detailsMovie/detailsMovieVideo";
 import {MovieSearch} from "./components/movieSearch/movieSearch";
+import {CssBaseline} from "@mui/material";
 
 const router = createBrowserRouter([
     {
@@ -60,6 +61,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <Provider store={store}>
             <CookiesProvider>
                 <RouterProvider router={router}/>
+                <CssBaseline/>
             </CookiesProvider>
         </Provider>
     </React.StrictMode>
