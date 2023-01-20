@@ -4,6 +4,7 @@ import {LoaderFunctionArgs} from "react-router";
 import {MovieList} from "../../types";
 import "./detailsMovie.css";
 import {createGlobalStyle} from "styled-components";
+import {Header} from "../header/header";
 
 export function loader({params}: LoaderFunctionArgs) {
     const movie = movieList.find(movie => movie.id === Number(params.movieID));
@@ -27,6 +28,7 @@ export function DetailsMovie() {
 
     return (
         <>
+            <Header/>
             <DetailImage/>
             <section>
                 <div className="background-image">
