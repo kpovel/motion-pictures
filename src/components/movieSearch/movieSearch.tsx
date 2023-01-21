@@ -5,6 +5,7 @@ import {filterMovieList} from "./filterMovieList";
 import {ProposedMovies} from "./proposedMovies";
 import {ChoiceGenre} from "./movieQuestion/choiceGenre";
 import {RadioButton} from "./movieQuestion/radioButton";
+import {Header} from "../header/header";
 
 export const indicatorsMovie = {
     low: "low",
@@ -60,6 +61,7 @@ export function MovieSearch() {
 
     return (
         <div className="movie-search">
+            <Header/>
             <section className="movie-search__item">
                 <h2 className="movie-search__title">Choose the genre of the movie</h2>
                 <ChoiceGenre handleChange={handleSelectGenre} selectedValue={selectedGenre}/>

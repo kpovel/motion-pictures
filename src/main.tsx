@@ -25,15 +25,17 @@ const router = createBrowserRouter([
                 path: "/authorization",
                 element: <AuthorizationMenu/>
             },
-            {
-                path: "/search",
-                element: <MovieSearch/>
-            }
         ]
+    },
+    {
+        path: "/search",
+        element: <MovieSearch/>,
+        errorElement: <ErrorPage/>
     },
     {
         path: "/movie/:movieID",
         element: <DetailsMovie/>,
+        errorElement: <ErrorPage/>,
         loader: movieLoader,
         children: [
             {
