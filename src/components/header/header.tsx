@@ -3,6 +3,7 @@ import {useCookies} from "react-cookie";
 import {AppBar, Box, Button, IconButton, styled, Toolbar, Tooltip, Typography} from "@mui/material";
 import {Search} from "@mui/icons-material";
 import {blueGrey, green} from "@mui/material/colors";
+import {scrollToTopPage} from "../movieSearch/movieSearch";
 
 const ColorButton = styled(Button)(() => ({
     backgroundColor: green[600],
@@ -25,7 +26,7 @@ export function Header() {
                 <Toolbar>
                     <Typography sx={{flexGrow: 1}}>
                         <Link to={"/"} style={{all: "unset"}}>
-                            <Button sx={{color: "#FFFFFF"}} size="large">
+                            <Button sx={{color: "#FFFFFF"}} size="large" onClick={scrollToTopPage}>
                                 Home
                             </Button>
                         </Link>

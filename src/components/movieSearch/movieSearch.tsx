@@ -11,7 +11,7 @@ export const indicatorsMovie = {
     high: "high"
 };
 
-function scrollToTopPage() {
+export function scrollToTopPage() {
     window.scrollTo({
         top: 0,
         behavior: "smooth"
