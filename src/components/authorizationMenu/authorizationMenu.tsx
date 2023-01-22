@@ -1,80 +1,125 @@
 /* eslint-disable indent */
-import "./authorization.css";
 import {Link, useNavigate} from "react-router-dom";
-import {FormEvent, useRef, useState} from "react";
+import {FormEvent, useState} from "react";
 import {useCookies} from "react-cookie";
 import {add} from "date-fns";
-import eye from "../../img/eye.svg";
-import eyeSlash from "../../img/eye-slash.svg";
-import {useClickOutside} from "../../customHooks/useClickOutside";
+import {
+    Box,
+    Button,
+    FormControl,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    Modal,
+    OutlinedInput,
+    TextField,
+    Typography
+} from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
+import {Close, Visibility, VisibilityOff} from "@mui/icons-material";
 
 export function AuthorizationMenu() {
     const [visibilityPassword, setVisibilityPassword] = useState(false);
-    const [cookie, setCookie] = useCookies(["isAuthorized"]);
+    const [, setCookie] = useCookies(["isAuthorized"]);
     const navigate = useNavigate();
-    const usernameRef = useRef<HTMLInputElement | null>(null);
-    const passwordRef = useRef<HTMLInputElement | null>(null);
 
-    function showPassword() {
+    function togglePasswordVisibility() {
         setVisibilityPassword(!visibilityPassword);
     }
 
-    function authorisationUser(event: FormEvent) {
-        const USERNAME = "kpovel";
+    function authorisationUser(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        const LOGIN = "kpovel";
         const PASSWORD = "1234";
-        const inputUsername = usernameRef.current?.value;
-        const inputPassword = passwordRef.current?.value;
-        const isCorrectAuthorizationData = USERNAME === inputUsername && PASSWORD === inputPassword;
+        const data = new FormData(event.currentTarget);
+        const {login, password} = {
+            login: data.get("login"),
+            password: data.get("password"),
+        };
 
+        const isCorrectAuthorizationData = LOGIN === login && PASSWORD === password;
         if (isCorrectAuthorizationData) {
             const expiresDate = add(new Date(), {months: 1});
             setCookie("isAuthorized", true, {expires: expiresDate, path: "/"});
 
             navigate("/");
         }
-
-        event.preventDefault();
     }
 
-    const domNode = useClickOutside(() => {
-        navigate("/");
-    });
-
     return (
-        <div className="authorizationMenu">
-            <div ref={domNode} className="authorization">
-                <div className="authorization-title authorization-title__right">
-                    <div></div>
-                    <h2 className="singin-title">Sign in</h2>
-                    <Link to="/">
-                        <button className="button-close-menu">{"\u2715"}</button>
-                    </Link>
-                </div>
-                <form className="input-forms" onSubmit={authorisationUser}>
-                    <p>
-                        <label className="label-login" htmlFor="username">Username:</label>
-                        <input className="form-textbox form-textbox__active"
-                               name="username" type="text"
-                               placeholder="ID"
-                               ref={usernameRef}
+        <Modal open onClose={() => navigate("/")}>
+            <Box sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: 400,
+                bgcolor: "background.paper",
+                borderRadius: 2,
+                boxShadow: 24,
+                p: 4,
+            }}>
+                <Grid container spacing={2} sx={{alignItems: "center"}}>
+                    <Grid xs={2}></Grid>
+                    <Grid xs={8} sx={{alignItems: "center"}}>
+                        <Typography component="h2" variant="h6" textAlign="center">Log in</Typography>
+                    </Grid>
+                    <Grid xs={2}>
+                        <Link to="/">
+                            <IconButton aria-label="close">
+                                <Close/>
+                            </IconButton>
+                        </Link>
+                    </Grid>
+                </Grid>
+                <Box component="form" onSubmit={authorisationUser} noValidate sx={{mt: 1}}>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="login"
+                        label="Login"
+                        name="login"
+                        autoComplete="login"
+                        autoFocus
+                        defaultValue="kpovel"
+                    />
+                    <FormControl margin="normal"
+                                 variant="outlined"
+                                 required
+                                 fullWidth
+                    >
+                        <InputLabel htmlFor="password">Password</InputLabel>
+                        <OutlinedInput
+                            id="password"
+                            name="password"
+                            label="Password"
+                            autoComplete="password"
+                            defaultValue="1234"
+                            type={visibilityPassword ? "text" : "password"}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={togglePasswordVisibility}
+                                        edge="end"
+                                    >
+                                        {visibilityPassword ? <VisibilityOff/> : <Visibility/>}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
                         />
-                    </p>
-                    <p>
-                        <label className="label-login" htmlFor="password">Password:</label>
-                        <input className="form-textbox form-textbox__active"
-                               name="password"
-                               type={visibilityPassword ? "text" : "password"}
-                               placeholder="Password"
-                               ref={passwordRef}
-                        />
-                        <img src={visibilityPassword ? eye : eyeSlash}
-                             className="show-password"
-                             alt={"show-password"}
-                             onClick={showPassword}/>
-                    </p>
-                    <input type="submit" className="login-button" value="Log in"/>
-                </form>
-            </div>
-        </div>
+                    </FormControl>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{mt: 3, mb: 2}}
+                    >
+                        Log In
+                    </Button>
+                </Box>
+            </Box>
+        </Modal>
     );
 }
