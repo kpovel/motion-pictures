@@ -1,12 +1,13 @@
 /* eslint-disable indent */
 import {Link, useNavigate} from "react-router-dom";
-import {FormEvent, useState} from "react";
+import {FormEvent, useReducer} from "react";
 import {useCookies} from "react-cookie";
 import {add} from "date-fns";
 import {
     Box,
     Button,
     FormControl,
+    FormHelperText,
     IconButton,
     InputAdornment,
     InputLabel,
@@ -18,13 +19,24 @@ import {
 import Grid from "@mui/material/Unstable_Grid2";
 import {Close, Visibility, VisibilityOff} from "@mui/icons-material";
 
+type authorizationHint = {
+    showLoginHint?: boolean,
+    showPasswordHint?: boolean,
+    visiblePassword?: boolean
+};
+
 export function AuthorizationMenu() {
-    const [visibilityPassword, setVisibilityPassword] = useState(false);
+    const [authorizationHints, setAuthorizationHints] = useReducer(
+        (state: authorizationHint, event: authorizationHint) => ({
+            ...state, ...event
+        }),
+        {showLoginHint: false, showPasswordHint: false, visiblePassword: false}
+    );
     const [, setCookie] = useCookies(["isAuthorized"]);
     const navigate = useNavigate();
 
     function togglePasswordVisibility() {
-        setVisibilityPassword(!visibilityPassword);
+        setAuthorizationHints({visiblePassword: !authorizationHints.visiblePassword});
     }
 
     function authorisationUser(event: FormEvent<HTMLFormElement>) {
@@ -37,12 +49,18 @@ export function AuthorizationMenu() {
             password: data.get("password"),
         };
 
-        const isCorrectAuthorizationData = LOGIN === login && PASSWORD === password;
-        if (isCorrectAuthorizationData) {
+        const loginCorrect = LOGIN === login;
+        const correctPassword = PASSWORD === password;
+        if (loginCorrect && correctPassword) {
             const expiresDate = add(new Date(), {months: 1});
             setCookie("isAuthorized", true, {expires: expiresDate, path: "/"});
 
             navigate("/");
+        } else {
+            setAuthorizationHints({
+                showLoginHint: !loginCorrect,
+                showPasswordHint: !correctPassword
+            });
         }
     }
 
@@ -53,7 +71,8 @@ export function AuthorizationMenu() {
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                width: 400,
+                width: "100%",
+                maxWidth: 400,
                 bgcolor: "background.paper",
                 borderRadius: 2,
                 boxShadow: 24,
@@ -83,11 +102,14 @@ export function AuthorizationMenu() {
                         autoComplete="login"
                         autoFocus
                         defaultValue="kpovel"
+                        error={authorizationHints.showLoginHint}
+                        helperText={authorizationHints.showLoginHint ? "Login must be \"kpovel\"" : ""}
                     />
                     <FormControl margin="normal"
                                  variant="outlined"
                                  required
                                  fullWidth
+                                 error={authorizationHints.showPasswordHint}
                     >
                         <InputLabel htmlFor="password">Password</InputLabel>
                         <OutlinedInput
@@ -96,7 +118,8 @@ export function AuthorizationMenu() {
                             label="Password"
                             autoComplete="password"
                             defaultValue="1234"
-                            type={visibilityPassword ? "text" : "password"}
+                            type={authorizationHints.visiblePassword ? "text" : "password"}
+                            error={authorizationHints.showPasswordHint}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
@@ -104,11 +127,13 @@ export function AuthorizationMenu() {
                                         onClick={togglePasswordVisibility}
                                         edge="end"
                                     >
-                                        {visibilityPassword ? <VisibilityOff/> : <Visibility/>}
+                                        {authorizationHints.visiblePassword ? <VisibilityOff/> : <Visibility/>}
                                     </IconButton>
                                 </InputAdornment>
                             }
                         />
+                        {authorizationHints.showPasswordHint ?
+                            <FormHelperText error>Password must be &quot;1234&quot;</FormHelperText> : ""}
                     </FormControl>
                     <Button
                         type="submit"
