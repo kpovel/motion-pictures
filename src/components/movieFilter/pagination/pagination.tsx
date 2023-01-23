@@ -1,10 +1,11 @@
 import {useDispatch, useSelector} from "react-redux";
 import {nextPage, previousPage} from "../../../store/action/action";
+import {Box, Button, Typography} from "@mui/material";
 
 export function Pagination() {
     const dispatch = useDispatch();
-    const currentPage = useSelector(({setPage} : {setPage: number}) => setPage);
-    const numberPages = useSelector(({setNumberPage} : {setNumberPage: number}) => setNumberPage);
+    const currentPage = useSelector(({setPage}: {setPage: number}) => setPage);
+    const numberPages = useSelector(({setNumberPage}: {setNumberPage: number}) => setNumberPage);
 
     function setPreviousPage() {
         dispatch(previousPage(currentPage));
@@ -15,18 +16,35 @@ export function Pagination() {
     }
 
     return (
-        <div className="pagination">
-            <div className="pagination__buttons">
-                <button
-                    className={currentPage === 1 ? "pagination-button pagination-button__grey" : "pagination-button"}
-                    onClick={setPreviousPage}>Previous
-                </button>
-                <button
-                    className={currentPage === numberPages ? "pagination-button pagination-button__grey" : "pagination-button"}
-                    onClick={setNextPage}>Next
-                </button>
-            </div>
-            <div className="number-pages">{currentPage} of {numberPages}</div>
-        </div>
+        <>
+            <Box sx={{
+                display: "flex",
+                justifyContent: "space-evenly",
+            }}>
+                <Button
+                    variant="contained"
+                    disabled={currentPage === 1}
+                    onClick={setPreviousPage}
+                    sx={{width: 100}}
+                >
+                    Previous
+                </Button>
+                <Button
+                    variant="contained"
+                    disabled={currentPage === numberPages}
+                    onClick={setNextPage}
+                    sx={{width: 100}}
+                >
+                    Next
+                </Button>
+            </Box>
+            <Typography
+                variant="body1"
+                component="p"
+                sx={{textAlign: "center"}}
+            >
+                {currentPage} of {numberPages}
+            </Typography>
+        </>
     );
 }

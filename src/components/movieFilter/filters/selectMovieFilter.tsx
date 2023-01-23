@@ -2,6 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {resetPageNumber, selectFilterSort, selectFilterYear} from "../../../store/action/action";
 import {MovieFilter} from "../../../types";
 import {UndefinedFilterError} from "../../../customHandlerErrors/handleErrors";
+import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 
 export function SelectMovieFilter({option, labelName, reduxStateSetting}: MovieFilter) {
     const dispatch = useDispatch();
@@ -22,15 +23,17 @@ export function SelectMovieFilter({option, labelName, reduxStateSetting}: MovieF
     }
 
     return (
-        <div className="sort-menu">
-            <label className="title-sort-menu">{labelName}</label>
-            <div className="dropdown-menu">
-                <select value={selectedFilter} className="sort-menu__sort" onChange={e => selectFilter(e.target.value)}>
-                    {option.map((option, index) => {
-                        return <option key={index} value={option.value}>{option.label}</option>;
-                    })}
-                </select>
-            </div>
-        </div>
+        <FormControl fullWidth size="small">
+            <InputLabel disabled>{labelName}</InputLabel>
+            <Select
+                value={selectedFilter}
+                label={labelName}
+                onChange={e => selectFilter(e.target.value)}
+            >
+                {option.map((option, index) => (
+                    <MenuItem key={index} value={option.value}>{option.label}</MenuItem>
+                ))}
+            </Select>
+        </FormControl>
     );
 }

@@ -1,5 +1,6 @@
 import {useDispatch} from "react-redux";
 import {resetPageNumber, selectFilterGenre} from "../../../store/action/action";
+import {Checkbox, FormControlLabel} from "@mui/material";
 
 type Genre = {
     genre: string,
@@ -9,7 +10,7 @@ type Genre = {
 
 
 export function TemplateCheckboxGenre({genre, id, checkedGenres}: Genre) {
-    const isCheckboxChecked = new Set(checkedGenres).has(id);
+    const genreIsSelected = new Set(checkedGenres).has(id);
     const dispatch = useDispatch();
 
     function handleClick() {
@@ -18,11 +19,18 @@ export function TemplateCheckboxGenre({genre, id, checkedGenres}: Genre) {
     }
 
     return (
-        <div className="genre">
-            <label>
-                <input type="checkbox" checked={isCheckboxChecked} onChange={handleClick}/>
-                {genre}
-            </label>
-        </div>
+        <FormControlLabel
+            control={<Checkbox
+                size="small"
+                checked={genreIsSelected}
+                onChange={handleClick}
+                sx={{
+                    height: 28,
+                    width: 28,
+                    ml: 1,
+                }}
+            />}
+            label={genre}
+        />
     );
 }
