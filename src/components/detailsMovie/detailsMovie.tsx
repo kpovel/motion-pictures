@@ -2,9 +2,8 @@ import {NavLink, Outlet, useLoaderData} from "react-router-dom";
 import {movieList} from "../../data/movieData";
 import {LoaderFunctionArgs} from "react-router";
 import {MovieList} from "../../types";
-import "./detailsMovie.css";
-import {createGlobalStyle} from "styled-components";
 import {Header} from "../header/header";
+import {Box, Button, Card, CardMedia, Typography} from "@mui/material";
 
 export function loader({params}: LoaderFunctionArgs) {
     const movie = movieList.find(movie => movie.id === Number(params.movieID));
@@ -12,57 +11,78 @@ export function loader({params}: LoaderFunctionArgs) {
 }
 
 export function DetailsMovie() {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const movieLoader: MovieList = useLoaderData();
+    const movieLoader = useLoaderData() as MovieList;
     const posterPath = movieLoader.poster_path;
     const backgroundPath = movieLoader.backdrop_path || posterPath;
     const backgroundImageLink = `https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${backgroundPath}`;
     const posterLink = `https://www.themoviedb.org/t/p/w600_and_h900_bestv2${posterPath}`;
 
-    const DetailImage = createGlobalStyle`
-        .background-image {
-           --details-background__image: url(${backgroundImageLink})
-        }
-    `;
-
     return (
         <>
             <Header/>
-            <DetailImage/>
-            <section>
-                <div className="background-image">
-                    <div className="background-content">
-                        <div className="background-poster">
-                            <img src={posterLink} alt="Movie cover" className="movie-cover"/>
-                            <div className="details-description">
-                                <h2 className="background-poster__title">{movieLoader.title}</h2>
-                                <div className="background-poster__rating">Rating: {movieLoader.vote_average}</div>
-                                <p className="background-derails__overview">{movieLoader.overview}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section>
-                <div className="details-movie">
-                    <nav className="details-nav">
-                        <NavLink to={`/movie/${movieLoader.id}`}>
-                            <button className="nav-button">Details</button>
+            <Box>
+                <Card sx={{
+                    background: "no-repeat",
+                    backgroundImage: `linear-gradient(to right, rgba(10.5, 31.5, 52.5, 1) 150px,
+                     rgba(10.5, 31.5, 52.5, 0.64) 100%), url(${backgroundImageLink})`,
+                    backgroundSize: "cover",
+                    borderRadius: 0,
+                }}>
+                    <Box sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                        gap: "30px",
+                        margin: "20px auto",
+                        width: "80vw",
+                    }}>
+                        <CardMedia
+                            component="img"
+                            image={posterLink}
+                            alt="Movie cover"
+                            sx={{
+                                height: "20rem",
+                                objectFit: "contain",
+                                maxWidth: 320
+                            }}/>
+                        <Box sx={{
+                            maxWidth: 670,
+                            "> *": {
+                                color: "white",
+                            }
+                        }}>
+                            <Typography variant="h5" component="h2">{movieLoader.title}</Typography>
+                            <Typography
+                                variant="body1"
+                                component="p"
+                            >
+                                Rating: {movieLoader.vote_average}
+                            </Typography>
+                            <Typography variant="body1" component="p">{movieLoader.overview}</Typography>
+                        </Box>
+                    </Box>
+                </Card>
+            </Box>
+            <Box>
+                <Box
+                    sx={{
+                        margin: "20px auto",
+                        width: "80vw",
+                    }}>
+                    <nav>
+                        <NavLink to={`/movie/${movieLoader.id}`} style={{all: "unset"}}>
+                            <Button>Details</Button>
                         </NavLink>
-                        <NavLink to={`/movie/${movieLoader.id}/video`}>
-                            <button className="nav-button">Video</button>
+                        <NavLink to={`/movie/${movieLoader.id}/video`} style={{all: "unset"}}>
+                            <Button>Video</Button>
                         </NavLink>
-                        <NavLink to={`/movie/${movieLoader.id}/actors`}>
-                            <button className="nav-button">Actors</button>
+                        <NavLink to={`/movie/${movieLoader.id}/actors`} style={{all: "unset"}}>
+                            <Button>Actors</Button>
                         </NavLink>
                     </nav>
-                    <hr/>
-                    <div id="detail">
-                        <Outlet/>
-                    </div>
-                </div>
-            </section>
+                    <Outlet/>
+                </Box>
+            </Box>
         </>
     );
 }
