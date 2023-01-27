@@ -1,8 +1,7 @@
-import "./App.css";
 import {Header} from "./components/header/header";
 import {MovieFilter} from "./components/movieFilter/movieFilter";
 import {MovieList} from "./components/movieList/movieList";
-import {Outlet, useLocation} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import React from "react";
 import {Box, Fab, Fade, useScrollTrigger} from "@mui/material";
 import {KeyboardArrowUp} from "@mui/icons-material";
@@ -27,18 +26,23 @@ function ScrollTop() {
 }
 
 export function App() {
-    const location = useLocation();
-    const isOpenAuthorizationMenu = location.pathname === "/authorization";
-
     return (
-        <div className={isOpenAuthorizationMenu ? "App App__disabled" : "App"}>
+        <Box>
             <Header/>
-            <main className="main-display">
+            <Box
+                component="main"
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-evenly",
+                    overflow: "auto",
+                    minHeight: "100vh",
+                }}
+            >
                 <MovieFilter/>
                 <MovieList/>
-            </main>
+            </Box>
             <ScrollTop/>
             <Outlet/>
-        </div>
+        </Box>
     );
 }

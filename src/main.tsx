@@ -5,7 +5,6 @@ import {Provider} from "react-redux";
 import {store} from "./store";
 import {CookiesProvider} from "react-cookie";
 import {CssBaseline} from "@mui/material";
-import "./index.css";
 import {App} from "./App";
 import ErrorPage from "./components/errorPage/errorPage";
 import {AuthorizationMenu} from "./components/authorizationMenu/authorizationMenu";
