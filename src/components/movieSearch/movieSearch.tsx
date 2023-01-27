@@ -1,11 +1,10 @@
-/* eslint-disable indent */
-import "./movieSearch.css";
 import {useEffect, useState} from "react";
 import {filterMovieList} from "./filterMovieList";
 import {ProposedMovies} from "./proposedMovies";
 import {ChoiceGenre} from "./movieQuestion/choiceGenre";
-import {RadioButton} from "./movieQuestion/radioButton";
 import {Header} from "../header/header";
+import {BooleanMovieQuestion} from "./movieQuestion/booleanMovieQuestion";
+import {Box, Card, styled, Typography} from "@mui/material";
 
 export const indicatorsMovie = {
     low: "low",
@@ -26,6 +25,24 @@ function scrollDown() {
     });
 }
 
+const MovieSearchTitle = styled(Typography)(({theme}) => ({
+    ...theme.typography.h5,
+    textAlign: "center",
+    marginBottom: theme.spacing(2)
+}));
+
+const MovieSearchSection = styled(Card)(() => ({
+    paddingTop: 56,
+    height: "100vh",
+    boxShadow: "none",
+    scrollSnapAlign: "center",
+    scrollSnapStop: "always",
+
+    display: "grid",
+    placeContent: "center",
+    justifyItems: "center",
+}));
+
 export function MovieSearch() {
     const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
     const [movieRating, setMovieRating] = useState<string | null>(null);
@@ -34,6 +51,7 @@ export function MovieSearch() {
 
     useEffect(() => {
         scrollToTopPage();
+        document.documentElement.style.setProperty("scroll-snap-type", "y mandatory");
     }, []);
 
     function handleSelectGenre(genreID: number | null) {
@@ -60,48 +78,40 @@ export function MovieSearch() {
     }
 
     return (
-        <div className="movie-search">
+        <>
             <Header/>
-            <section className="movie-search__item">
-                <h2 className="movie-search__title">Choose the genre of the movie</h2>
-                <ChoiceGenre handleChange={handleSelectGenre} selectedValue={selectedGenre}/>
-            </section>
-            <section className="movie-search__item">
-                <h2 className="movie-search__title">Choose the rating of the movie</h2>
-                <RadioButton name="rating"
-                             label="Low rating"
-                             checked={movieRating === indicatorsMovie.low}
-                             onChange={() => handleSelectRating(indicatorsMovie.low)}
-                />
-                <RadioButton name="rating"
-                             label="High rating"
-                             checked={movieRating === indicatorsMovie.high}
-                             onChange={() => handleSelectRating(indicatorsMovie.high)}
-                />
-            </section>
-            <section className="movie-search__item">
-                <h2 className="movie-search__title">Choose the popularity of the movie</h2>
-                <RadioButton name="popularity"
-                             label="Low popularity"
-                             checked={selectedPopularity === indicatorsMovie.low}
-                             onChange={() => handleSelectPopularity(indicatorsMovie.low)}
-                />
-                <RadioButton name="popularity"
-                             label="High popularity"
-                             checked={selectedPopularity === indicatorsMovie.high}
-                             onChange={() => handleSelectPopularity(indicatorsMovie.high)}
-                />
-            </section>
-            <section className="movie-search__item">
-                <h2 className="movie-search__title">Results</h2>
-                {noAllQuestionAnswered ?
-                    "Answer all the questions" :
-                    <ProposedMovies
-                        filteredMovieList={filterMovieList(selectedGenre, movieRating, selectedPopularity)}
-                        searchMovieAgain={resetAllMoviePreference}
+            <Box>
+                <MovieSearchSection>
+                    <MovieSearchTitle variant="h2">Choose the genre of the movie</MovieSearchTitle>
+                    <ChoiceGenre handleChange={handleSelectGenre} selectedValue={selectedGenre}/>
+                </MovieSearchSection>
+                <MovieSearchSection>
+                    <MovieSearchTitle variant="h2">Choose the rating of the movie</MovieSearchTitle>
+                    <BooleanMovieQuestion
+                        questionName="rating"
+                        selectedValue={movieRating}
+                        handleChange={handleSelectRating}
                     />
-                }
-            </section>
-        </div>
+                </MovieSearchSection>
+                <MovieSearchSection>
+                    <MovieSearchTitle variant="h2">Choose the popularity of the movie</MovieSearchTitle>
+                    <BooleanMovieQuestion
+                        questionName="popularity"
+                        selectedValue={selectedPopularity}
+                        handleChange={handleSelectPopularity}
+                    />
+                </MovieSearchSection>
+                <MovieSearchSection>
+                    <MovieSearchTitle variant="h2">Results</MovieSearchTitle>
+                    {noAllQuestionAnswered ?
+                        <Typography component="p" variant="body1">Answer all the questions</Typography> :
+                        <ProposedMovies
+                            filteredMovieList={filterMovieList(selectedGenre, movieRating, selectedPopularity)}
+                            searchMovieAgain={resetAllMoviePreference}
+                        />
+                    }
+                </MovieSearchSection>
+            </Box>
+        </>
     );
 }
