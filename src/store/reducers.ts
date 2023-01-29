@@ -11,6 +11,7 @@ import {
     RESET_CHECKBOX_FILTERS,
     RESET_PAGE
 } from "./action/actionTypes";
+import {optionsSortBy} from "../data/optionSortBy";
 
 const savedPageNumber = Number(localStorage.getItem("currentPageNumber")) || 1;
 
@@ -71,7 +72,7 @@ function setFilterYear(state = savedYearSort, action: { type: string, yearReleas
 }
 
 
-const savedSortBy = localStorage.getItem("sortByFilter");
+const savedSortBy = localStorage.getItem("sortByFilter") || optionsSortBy[0].value;
 
 function setSortBy(state = savedSortBy, action: { type: string, sortBy: string }) {
     const sortBy = action.sortBy;
