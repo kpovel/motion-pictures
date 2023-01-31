@@ -33,9 +33,8 @@ export function App() {
                 component="main"
                 sx={{
                     display: "flex",
-                    justifyContent: "space-evenly",
+                    justifyContent: "flex-start",
                     overflow: "auto",
-                    minHeight: "100vh",
                 }}
             >
                 <MovieFilter/>

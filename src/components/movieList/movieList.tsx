@@ -20,14 +20,16 @@ export function MovieList() {
     [selectedFilterSortBy, selectedFilterYear, selectedGenres]);
 
     useEffect(() => {
-        dispatch(numberPages(Math.ceil(sortedMovieList.length / 10)));
+        dispatch(numberPages(Math.ceil(sortedMovieList.length / 10) || 1));
     }, [dispatch, sortedMovieList]);
 
     return (
         <Box
             sx={{
                 m: 2,
-                mt: 0.5
+                mt: 0.5,
+                height: 1,
+                width: 1
             }}>
             <Grid container>
                 {sortedMovieList.length ?
