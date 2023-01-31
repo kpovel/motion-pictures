@@ -4,7 +4,7 @@ import {movieToSelected, movieToWatchLater} from "../../store/action/action";
 import {useCookies} from "react-cookie";
 import {Link, useNavigate} from "react-router-dom";
 import Grid from "@mui/material/Unstable_Grid2";
-import {Box, Button, Card, CardMedia, Divider, IconButton, Typography} from "@mui/material";
+import {Box, Button, Card, CardMedia, Divider, IconButton, Tooltip, Typography} from "@mui/material";
 import {BookmarkAdded, BookmarkBorder, Star, StarBorder} from "@mui/icons-material";
 import {grey} from "@mui/material/colors";
 
@@ -90,12 +90,25 @@ export function MovieTemplate({poster_path, backdrop_path, vote_average, title, 
                         }}>
                             <Typography variant="body1" component="p">Rating: {vote_average}</Typography>
                             <Box>
-                                <IconButton onClick={addMovieToSelected} sx={{color: grey[900]}}>
-                                    {isUserAuthorized && isSelectedThisMovie ? <Star/> : <StarBorder/>}
-                                </IconButton>
-                                <IconButton onClick={addMovieToWatchLater} sx={{color: grey[900]}}>
-                                    {isUserAuthorized && isWatchLaterThisMovie ? <BookmarkAdded/> : <BookmarkBorder/>}
-                                </IconButton>
+                                <Tooltip title={isUserAuthorized && isSelectedThisMovie ?
+                                    "Remove from your favorite list" : "Mark as favorite"}>
+                                    <IconButton
+                                        onClick={addMovieToSelected}
+                                        sx={{color: grey[900]}}
+                                        aria-label="Favorite list">
+                                        {isUserAuthorized && isSelectedThisMovie ? <Star/> : <StarBorder/>}
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title={isUserAuthorized && isWatchLaterThisMovie ?
+                                    "Remove from your watchlist" : "Add to your watchlist"}>
+                                    <IconButton
+                                        onClick={addMovieToWatchLater}
+                                        sx={{color: grey[900]}}
+                                        aria-label="Watchlist">
+                                        {isUserAuthorized && isWatchLaterThisMovie ?
+                                            <BookmarkAdded/> : <BookmarkBorder/>}
+                                    </IconButton>
+                                </Tooltip>
                             </Box>
                         </Box>
                         <Typography variant="subtitle1" component="h3">{title}</Typography>

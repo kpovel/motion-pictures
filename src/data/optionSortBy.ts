@@ -25,11 +25,11 @@ export const optionsSortBy: optionSortBy[] = [
 export const optionSortByForAuthorizedUser: optionSortBy[] = [
     ...optionsSortBy,
     {
-        label: "Watch later",
-        value: "watchLater"
+        label: "Watchlist",
+        value: "watchlist"
     },
     {
-        label: "Chosen",
-        value: "chosen"
+        label: "Favorite list",
+        value: "favoriteList"
     }
 ];
