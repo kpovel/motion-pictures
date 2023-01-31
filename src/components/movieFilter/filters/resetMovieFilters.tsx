@@ -1,5 +1,6 @@
 import {useDispatch} from "react-redux";
 import {resetCheckboxFilters, resetPageNumber, selectFilterSort, selectFilterYear} from "../../../store/action/action";
+import {Button} from "@mui/material";
 
 export function ResetMovieFilters() {
     const dispatch = useDispatch();
@@ -14,5 +15,5 @@ export function ResetMovieFilters() {
         dispatch(resetCheckboxFilters());
     }
 
-    return <button className="reset-filters" onClick={resetMovieFilters}>Reset all filters</button>;
+    return <Button variant="contained" fullWidth onClick={resetMovieFilters}>Reset all filters</Button>;
 }

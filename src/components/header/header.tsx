@@ -1,6 +1,16 @@
-import "./header.css";
 import {Link} from "react-router-dom";
 import {useCookies} from "react-cookie";
+import {AppBar, Box, Button, IconButton, styled, Toolbar, Tooltip, Typography} from "@mui/material";
+import {Search} from "@mui/icons-material";
+import {blueGrey, green} from "@mui/material/colors";
+import {scrollToTopPage} from "../movieSearch/movieSearch";
+
+const ColorButton = styled(Button)(() => ({
+    backgroundColor: green[600],
+    "&:hover": {
+        backgroundColor: green[700],
+    },
+}));
 
 export function Header() {
     const [cookie, setCookie] = useCookies(["isAuthorized"]);
@@ -11,21 +21,40 @@ export function Header() {
     }
 
     return (
-        <header className="header">
-            <Link to={"/"}>
-                <button className="home-button">Home</button>
-            </Link>
-            <div className="header-buttons">
-                <Link to={"/search"}>
-                    <button className="movie-search__button"/>
-                </Link>
-                {isUserAuthorized ?
-                    <button className="login" onClick={removeAuthorization}>Log out</button> :
-                    <Link to={"/authorization"}>
-                        <button className="login">Sign in</button>
-                    </Link>
-                }
-            </div>
-        </header>
+        <Box sx={{flexGrow: 1}}>
+            <AppBar>
+                <Toolbar>
+                    <Typography sx={{flexGrow: 1}}>
+                        <Link to={"/"} style={{all: "unset"}}>
+                            <Button sx={{color: "#FFFFFF"}} size="large" onClick={scrollToTopPage}>
+                                Home
+                            </Button>
+                        </Link>
+                    </Typography>
+                    <Tooltip title="Movie search">
+                        <IconButton sx={{mr: 1.5}}>
+                            <Link to={"/search"} style={{
+                                all: "unset",
+                                width: "35px",
+                                height: "35px",
+                            }}>
+                                <Search fontSize="large" sx={{color: blueGrey[800]}}/>
+                            </Link>
+                        </IconButton>
+                    </Tooltip>
+                    {isUserAuthorized ?
+                        <ColorButton variant="contained" onClick={removeAuthorization}>
+                            Log out
+                        </ColorButton> :
+                        <Link to={"/authorization"} style={{all: "unset"}}>
+                            <ColorButton variant="contained">
+                                Log in
+                            </ColorButton>
+                        </Link>
+                    }
+                </Toolbar>
+            </AppBar>
+            <Toolbar/>
+        </Box>
     );
 }

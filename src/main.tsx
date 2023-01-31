@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import "./index.css";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {Provider} from "react-redux";
 import {store} from "./store";
+import {CookiesProvider} from "react-cookie";
+import {CssBaseline} from "@mui/material";
+import {App} from "./App";
 import ErrorPage from "./components/errorPage/errorPage";
 import {AuthorizationMenu} from "./components/authorizationMenu/authorizationMenu";
-import {CookiesProvider} from "react-cookie";
 import {DetailsMovie, loader as movieLoader} from "./components/detailsMovie/detailsMovie";
 import {DetailsMovieInfo} from "./components/detailsMovie/detailsMovieInfo";
 import {DetailsMovieActors} from "./components/detailsMovie/detailsMovieActors";
@@ -24,32 +24,33 @@ const router = createBrowserRouter([
                 path: "/authorization",
                 element: <AuthorizationMenu/>
             },
+        ]
+    },
+    {
+        path: "/search",
+        element: <MovieSearch/>,
+        errorElement: <ErrorPage/>
+    },
+    {
+        path: "/movie/:movieID",
+        element: <DetailsMovie/>,
+        errorElement: <ErrorPage/>,
+        loader: movieLoader,
+        children: [
             {
-                path: "/search",
-                element: <MovieSearch/>
+                path: "",
+                element: <DetailsMovieInfo/>,
+                loader: movieLoader
             },
             {
-                path: "/movie/:movieID",
-                element: <DetailsMovie/>,
-                loader: movieLoader,
-                children: [
-                    {
-                        path: "",
-                        element: <DetailsMovieInfo/>,
-                        loader: movieLoader
-                    },
-                    {
-                        path: "video",
-                        element: <DetailsMovieVideo/>,
-                        loader: movieLoader
-
-                    },
-                    {
-                        path: "actors",
-                        element: <DetailsMovieActors/>,
-                        loader: movieLoader
-                    }
-                ]
+                path: "video",
+                element: <DetailsMovieVideo/>,
+                loader: movieLoader
+            },
+            {
+                path: "actors",
+                element: <DetailsMovieActors/>,
+                loader: movieLoader
             }
         ]
     }
@@ -60,6 +61,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <Provider store={store}>
             <CookiesProvider>
                 <RouterProvider router={router}/>
+                <CssBaseline/>
             </CookiesProvider>
         </Provider>
     </React.StrictMode>

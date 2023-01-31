@@ -1,6 +1,7 @@
 /* eslint-disable indent */
 import {movieList} from "../../data/movieData";
 import parseISO from "date-fns/parseISO";
+import {optionSortByForAuthorizedUser} from "../../data/optionSortBy";
 
 export function organizeListOfMovies(selectedFilterSortBy: string,
                                      selectedFilterYear: string,
@@ -26,12 +27,12 @@ export function organizeListOfMovies(selectedFilterSortBy: string,
         const isSelectedMovie = new Set(selectedMovies).size;
 
         switch (selectedFilterSortBy) {
-            case "watchLater":
+            case optionSortByForAuthorizedUser[4].value:
                 if (isWatchLaterMovie) {
                     return new Set(watchLaterMovies).has(item.id);
                 }
                 return false;
-            case "chosen":
+            case optionSortByForAuthorizedUser[5].value:
                 if (isSelectedMovie) {
                     return new Set(selectedMovies).has(item.id);
                 }

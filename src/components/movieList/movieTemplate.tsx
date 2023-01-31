@@ -3,6 +3,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {movieToSelected, movieToWatchLater} from "../../store/action/action";
 import {useCookies} from "react-cookie";
 import {Link, useNavigate} from "react-router-dom";
+import Grid from "@mui/material/Unstable_Grid2";
+import {Box, Button, Card, CardMedia, Divider, IconButton, Tooltip, Typography} from "@mui/material";
+import {BookmarkAdded, BookmarkBorder, Star, StarBorder} from "@mui/icons-material";
+import {grey} from "@mui/material/colors";
 
 type MovieTemplateProps = Readonly<{
     poster_path: MovieList["poster_path"],
@@ -42,30 +46,81 @@ export function MovieTemplate({poster_path, backdrop_path, vote_average, title, 
     }
 
     return (
-        <article className="movie" key={id}>
-            <img className="movie-cover" src={imageLink} alt={title}/>
-            <div className="description-movie">
-                <div className="about-movie">
-                    <div className="first-row">
-                        <div className="rating">Rating: {vote_average}</div>
-                        <div className="save-button">
-                            <div onClick={addMovieToSelected} className={isSelectedThisMovie && isUserAuthorized ?
-                                "icon-star icon-star__selected" : "icon-star icon-star__unselected"}/>
-                            <svg onClick={addMovieToWatchLater} className={isWatchLaterThisMovie && isUserAuthorized ?
-                                "icon-bookmark icon-bookmark__saved" : "icon-bookmark icon-bookmark__unsaved"}/>
-                        </div>
+        <Grid xs={12} lg={6} p={1.5}>
+            <Card
+                sx={{
+                    display: "flex",
+                    width: 1,
+                    height: 1,
+                    padding: "10px",
+                    borderRadius: 1,
+                    boxShadow: 6,
+                    backgroundColor: "white",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                        boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.5)",
+                        transform: "scale(1.05)",
+                    }
+                }}>
+                <CardMedia
+                    component="img"
+                    image={imageLink}
+                    title={title}
+                    alt={title}
+                    sx={{
+                        height: "20rem",
+                        maxWidth: 280,
+                        borderRadius: 1
+                    }}
+                />
+                <Box sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    width: 1,
+                    height: 1,
+                    padding: 1
+                }}>
+                    <div>
+                        <Box sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            mt: 1,
+                        }}>
+                            <Typography variant="body1" component="p">Rating: {vote_average}</Typography>
+                            <Box>
+                                <Tooltip title={isUserAuthorized && isSelectedThisMovie ?
+                                    "Remove from your favorite list" : "Mark as favorite"}>
+                                    <IconButton
+                                        onClick={addMovieToSelected}
+                                        sx={{color: grey[900]}}
+                                        aria-label="Favorite list">
+                                        {isUserAuthorized && isSelectedThisMovie ? <Star/> : <StarBorder/>}
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title={isUserAuthorized && isWatchLaterThisMovie ?
+                                    "Remove from your watchlist" : "Add to your watchlist"}>
+                                    <IconButton
+                                        onClick={addMovieToWatchLater}
+                                        sx={{color: grey[900]}}
+                                        aria-label="Watchlist">
+                                        {isUserAuthorized && isWatchLaterThisMovie ?
+                                            <BookmarkAdded/> : <BookmarkBorder/>}
+                                    </IconButton>
+                                </Tooltip>
+                            </Box>
+                        </Box>
+                        <Typography variant="subtitle1" component="h3">{title}</Typography>
                     </div>
-                    <div className="film-name">{title}</div>
-                </div>
-                <div className="details">
-                    <hr/>
-                    <Link to={`movie/${id}`}>
-                        <button className="details-button">
-                            Details
-                        </button>
-                    </Link>
-                </div>
-            </div>
-        </article>
+                    <Box>
+                        <Divider sx={{my: 1}}/>
+                        <Link to={`movie/${id}`} style={{all: "unset"}}>
+                            <Button fullWidth variant="contained">Details</Button>
+                        </Link>
+                    </Box>
+                </Box>
+            </Card>
+        </Grid>
     );
 }
